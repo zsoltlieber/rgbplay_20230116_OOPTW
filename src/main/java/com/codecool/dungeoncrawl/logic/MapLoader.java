@@ -4,7 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -35,8 +35,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 's':
+                        case 'z':
+                        case 'w':
                             cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                            new Enemy(cell, Enemy.getEnemyType(line.charAt(x)));
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);
