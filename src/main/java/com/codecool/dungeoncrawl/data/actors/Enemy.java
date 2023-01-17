@@ -3,10 +3,6 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 
 public class Enemy extends Actor {
-    private final String name;
-    private final int health;
-    private final int attack;
-    private final int defense;
     private final int xpValue;
     public Enemy(Cell cell, EnemyType enemyType) {
         super(cell);
