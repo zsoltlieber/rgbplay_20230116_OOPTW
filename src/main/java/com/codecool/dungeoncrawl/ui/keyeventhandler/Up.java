@@ -10,7 +10,7 @@ public class Up implements KeyHandler {
     public static final KeyCode code2 = KeyCode.W;
 
     @Override
-    public void perform(KeyEvent event, GameMap map) {
+    public void perform(KeyEvent event, GameLogic logic) {
         if(code1.equals(event.getCode()) || code2.equals(event.getCode()))
             logic.getMap().getPlayer().move(0, -1);
     }
