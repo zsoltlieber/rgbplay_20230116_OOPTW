@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.ui.keyeventhandler;
 
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.logic.GameLogic;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -11,6 +12,6 @@ public class Down implements KeyHandler {
     @Override
     public void perform(KeyEvent event, GameMap map) {
         if (code1.equals(event.getCode()) || code2.equals(event.getCode()))
-            map.getPlayer().move(0, 1);
+            logic.getMap().getPlayer().move(0, 1);
     }
 }

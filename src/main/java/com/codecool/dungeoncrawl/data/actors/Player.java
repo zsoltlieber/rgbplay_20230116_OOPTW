@@ -12,6 +12,7 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
+    
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;
