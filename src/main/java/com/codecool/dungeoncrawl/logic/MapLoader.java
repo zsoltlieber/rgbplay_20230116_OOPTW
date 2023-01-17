@@ -3,8 +3,9 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.actors.Item;
 import com.codecool.dungeoncrawl.data.actors.Player;
-import com.codecool.dungeoncrawl.data.actors.Skeleton;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -24,7 +25,8 @@ public class MapLoader {
             for (int x = 0; x < width; x++) {
                 if (x < line.length()) {
                     Cell cell = map.getCell(x, y);
-                    switch (line.charAt(x)) {
+                    char currentChar = line.charAt(x);
+                    switch (currentChar) {
                         case ' ':
                             cell.setType(CellType.EMPTY);
                             break;
@@ -35,15 +37,26 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             break;
                         case 's':
-                            cell.setType(CellType.FLOOR);
-                            new Skeleton(cell);
+                        case 'z':
+                        case 'w':
+                            cell.setType(CellType.ENEMY);
+                            new Enemy(cell, Enemy.getEnemyType(currentChar));
+                            break;
+                        case 'H':
+                        case 'C':
+                        case 'S':
+                        case 'A':
+                        case 'D':
+                        case 'X':
+                            cell.setType(CellType.ITEM);
+                            new Item(cell, Item.getItemType(currentChar));
                             break;
                         case '@':
-                            cell.setType(CellType.FLOOR);
+                            cell.setType(CellType.PLAYER);
                             map.setPlayer(new Player(cell));
                             break;
                         default:
-                            throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");
+                            throw new RuntimeException("Unrecognized character: '" + currentChar + "'");
                     }
                 }
             }
