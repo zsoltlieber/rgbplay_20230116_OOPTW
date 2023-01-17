@@ -4,8 +4,11 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.Drawable;
 
 public abstract class Actor implements Drawable {
-    private Cell cell;
-    private int health = 10;
+    protected String name;
+    protected int health = 30;
+    protected int attack;
+    protected int defense;
+    protected Cell cell;
 
     public Actor(Cell cell) {
         this.cell = cell;
@@ -26,7 +29,8 @@ public abstract class Actor implements Drawable {
     public int getHealth() {
         return health;
     }
-
+    public int getAttack() {return attack;}
+    public int getDefense() {return defense;}
     public Cell getCell() {
         return cell;
     }
