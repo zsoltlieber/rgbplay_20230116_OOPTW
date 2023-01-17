@@ -2,10 +2,15 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
+
+    private List<Gate> gates = new ArrayList<>();
 
     private Player player;
 
@@ -18,6 +23,10 @@ public class GameMap {
                 cells[x][y] = new Cell(this, x, y, defaultCellType);
             }
         }
+    }
+
+    public  void addGateToMap( Gate gate){
+        gates.add(gate);
     }
 
     public Cell getCell(int x, int y) {
@@ -39,4 +48,9 @@ public class GameMap {
     public int getHeight() {
         return height;
     }
+
+    public List<Gate> getGates() {
+        return gates;
+    }
+
 }
