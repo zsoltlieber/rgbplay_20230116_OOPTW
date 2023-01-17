@@ -1,18 +1,26 @@
 package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.Position;
 
 public class Cell implements Drawable {
     private CellType type;
     private Actor actor;
     private GameMap gameMap;
-    private int x, y;
+    private Position position;
+
+    public Position getPosition() {
+        return position;
+    }
 
     public Cell(GameMap gameMap, int x, int y, CellType type) {
         this.gameMap = gameMap;
-        this.x = x;
-        this.y = y;
+        this.position = new Position(x,y);
         this.type = type;
+    }
+
+    public GameMap getGameMap() {
+        return gameMap;
     }
 
     public CellType getType() {
@@ -32,7 +40,7 @@ public class Cell implements Drawable {
     }
 
     public Cell getNeighbor(int dx, int dy) {
-        return gameMap.getCell(x + dx, y + dy);
+        return gameMap.getCell(position.getX() + dx, position.getY() + dy);
     }
 
     @Override
@@ -41,10 +49,10 @@ public class Cell implements Drawable {
     }
 
     public int getX() {
-        return x;
+        return position.getX();
     }
 
     public int getY() {
-        return y;
+        return position.getY();
     }
 }

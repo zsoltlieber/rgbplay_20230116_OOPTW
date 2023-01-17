@@ -3,11 +3,16 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 
+import java.util.List;
+
 public class GameLogic {
     private GameMap map;
 
+    private List<GameMap> allMaps;
+
     public GameLogic() {
-        this.map = MapLoader.loadMap();
+        this.allMaps = MapLoader.loadAllMaps();
+        this.map = allMaps.get(0);
     }
 
     public double getMapWidth() {
@@ -32,5 +37,13 @@ public class GameLogic {
 
     public GameMap getMap() {
         return map;
+    }
+
+    public void setMap(GameMap map) {
+        this.map = map;
+    }
+
+    public List<GameMap> getAllMaps() {
+        return allMaps;
     }
 }
