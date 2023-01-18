@@ -1,8 +1,11 @@
 package com.codecool.dungeoncrawl.ui;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.Gate;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.actors.Position;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
@@ -26,31 +29,16 @@ public class UI {
     private Stage primaryStage;
     private Set<KeyHandler> keyHandlers;
 
-
+    private static int VIEWPORT_HEIGHT = 15;
+    private static int VIEWPORT_WIDTH = 15;
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
-                logic.getMapWidth() * Tiles.TILE_WIDTH,
-                logic.getMapHeight() * Tiles.TILE_WIDTH);
+                VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
+                VIEWPORT_HEIGHT * Tiles.TILE_WIDTH);
         this.logic = logic;
         this.context = canvas.getGraphicsContext2D();
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
-    }
-
-    public void refreshContext(){
-
-        this.canvas = new Canvas(
-                logic.getMapWidth() * Tiles.TILE_WIDTH,
-                logic.getMapHeight() * Tiles.TILE_WIDTH);
-
-        this.context = canvas.getGraphicsContext2D();
-
-        this.mainStage = new MainStage(canvas);
-
-        Scene scene = mainStage.getScene();
-        primaryStage.setScene(scene);
-
-        scene.setOnKeyPressed(this::onKeyPressed);
     }
 
     public void setUpPain(Stage primaryStage) {
@@ -82,18 +70,50 @@ public class UI {
             Player player = logic.getMap().getPlayer();
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
-            refreshContext();
+
             refresh();
         }
         System.out.println("no such gate found");
     }
 
     public void refresh() {
+
+        int halfOfTheViewPortWidth = VIEWPORT_WIDTH /2;
+        int halfOfTheViewPortHeight = VIEWPORT_HEIGHT /2;
+        Position playerPosition = logic.getMap().getPlayer().getCell().getPosition();
+
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < logic.getMapWidth(); x++) {
-            for (int y = 0; y < logic.getMapHeight(); y++) {
-                Cell cell = logic.getCell(x, y);
+
+        for(int targetX = 0; targetX < VIEWPORT_WIDTH;targetX++){
+            for(int targetY = 0; targetY < VIEWPORT_HEIGHT;targetY++){
+
+                int sourceX = playerPosition.getX()-halfOfTheViewPortWidth + targetX;
+                int sourceY = playerPosition.getY()-halfOfTheViewPortHeight  +targetY;
+
+                Cell cell = new Cell(new GameMap(1,1, CellType.EMPTY),0,0, CellType.EMPTY);
+
+                if(!(sourceX <0 || sourceY< 0 || sourceX>= logic.getMapWidth() || sourceY>= logic.getMapHeight())){
+                    cell = logic.getCell(sourceX, sourceY);
+                }
+
+                if (cell.getActor() != null) {
+                    Tiles.drawTile(context, cell.getActor(),targetX, targetY);
+                } else {
+                    Tiles.drawTile(context, cell, targetX, targetY);
+                }
+            }
+        }
+
+        /*for (int x = playerPosition.getX()-halfOfTheViewPortWidth; x <= playerPosition.getX()+halfOfTheViewPortWidth; x++) {
+            for (int y = playerPosition.getY()-halfOfTheViewPortHeight; y <= playerPosition.getY()+halfOfTheViewPortHeight; y++) {
+
+                Cell cell = new Cell(new GameMap(1,1,CellType.EMPTY),0,0, CellType.EMPTY);
+
+                if(!(x <0 || y< 0 || x>= logic.getMapWidth() || y>= logic.getMapHeight())){
+                    cell = logic.getCell(x, y);
+                }
+
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(), x, y);
                 } else {
@@ -101,6 +121,6 @@ public class UI {
                 }
             }
         }
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
+        mainStage.setHealthLabelText(logic.getPlayerHealth());*/
     }
 }
