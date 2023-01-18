@@ -71,6 +71,9 @@ public class MapLoader {
                             cell.setType(CellType.ITEM);
                             new Item(cell, Item.getItemType(currentChar));
                             break;
+                        case '$':
+                            cell.setType(CellType.GATE);
+                            break;
                         case '@':
                             cell.setType(CellType.PLAYER);
                             map.setPlayer(new Player(cell));
