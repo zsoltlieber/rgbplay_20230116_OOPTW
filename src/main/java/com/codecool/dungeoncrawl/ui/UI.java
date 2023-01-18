@@ -61,7 +61,7 @@ public class UI {
         primaryStage.setScene(scene);
 
         logic.setup();
-        refresh();
+        //refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
     }
 
@@ -69,7 +69,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-        refresh();
+        //refresh();
     }
 
     public void mapChange(Cell cell){
@@ -84,7 +84,7 @@ public class UI {
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
             refreshContext();
-            refresh();
+            //refresh();
         }
         System.out.println("no such gate found");
     }

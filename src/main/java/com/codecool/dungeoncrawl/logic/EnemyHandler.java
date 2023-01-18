@@ -29,11 +29,11 @@ public class EnemyHandler {
             executors.add(executor);
             executors.get(i).scheduleAtFixedRate(() -> {
                     moveEnemies(map, enemyType.getName());
-                    try {
+                    /*try {
                         ui.refresh();
                     } catch(Exception e) {
                         System.out.println("Error when trying to refresh in enemy handler.");
-                    }
+                    }*/
             }, 0, enemyType.getFrequency(), TimeUnit.MILLISECONDS);
             i++;
         }
