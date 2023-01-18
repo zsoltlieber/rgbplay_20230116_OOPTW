@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 
 public class Enemy extends Actor {
-    private final int xpValue;
     public Enemy(Cell cell, EnemyType enemyType) {
         super(cell);
         this.name = enemyType.getName();
