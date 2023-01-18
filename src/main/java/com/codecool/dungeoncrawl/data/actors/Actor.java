@@ -53,7 +53,7 @@ public abstract class Actor implements Drawable {
             }
             nextCell.setActor(nextCellActor);
         } else if (nextCell.getType() == CellType.GATE && currentCellType == CellType.PLAYER) {
-
+            ui.mapChange(nextCell);
         } else {
             System.out.println("Not implemented yet!");
         }
