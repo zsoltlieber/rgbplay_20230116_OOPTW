@@ -105,6 +105,7 @@ public abstract class Actor implements Drawable {
     public int getXpValue() {return this.xpValue;}
     public int getCurrentXP() {return this.currentXP;}
     public int getCurrentLevel() {return this.currentLevel;}
+    public String getName() {return this.name;}
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;

@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.EnemyType;
+import com.codecool.dungeoncrawl.ui.UI;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 public class EnemyHandler {
     private GameMap map;
+    private UI ui;
     private List<ScheduledExecutorService> executors = new LinkedList<>();
     public EnemyHandler(GameMap map) {
         this.map = map;
@@ -26,47 +28,53 @@ public class EnemyHandler {
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
             executors.add(executor);
             executors.get(i).scheduleAtFixedRate(() -> {
-                    moveEnemies(map);
-            }, 1000, enemyType.getFrequency(), TimeUnit.MILLISECONDS);
+                    moveEnemies(map, enemyType.getName());
+                    try {
+                        ui.refresh();
+                    } catch(Exception e) {
+                        System.out.println("Error when trying to refresh in enemy handler.");
+                    }
+            }, 0, enemyType.getFrequency(), TimeUnit.MILLISECONDS);
             i++;
         }
     }
 
-    private void moveEnemies(GameMap map) {
+    private void moveEnemies(GameMap map, String enemyName) {
         int width = map.getWidth();
         int height = map.getHeight();
-        System.out.println("TOTAL: " + width + "         " + height);
-        for(int i = 0; i < height; i++) {
-            for(int j = 0; i < width; j++ ) {
-                //System.out.println("CURRENT: " + i + "         " + j);
+        Random random = new Random();
+
+        for(int i = 0; i < width; i++) {
+            for(int j = 0; j < height; j++ ) {
                 try {
                     Cell currentCell = map.getCell(i, j);
                     Actor currentCellActor;
                     if((currentCellActor = currentCell.getActor()) != null) {
-                        if (currentCell.getType() == CellType.ENEMY) {
-                            currentCellActor.move(0, 1);
+                        if (currentCell.getType() == CellType.ENEMY && currentCellActor.getName().equals(enemyName)) {
+                            System.out.println(currentCellActor.getName());
+                            switch(random.nextInt(4)) {
+                                case 0:
+                                    currentCellActor.move(1, 0);
+                                    break;
+                                case 1:
+                                    currentCellActor.move(-1, 0);
+                                    break;
+                                case 2:
+                                    currentCellActor.move(0, 1);
+                                    break;
+                                case 3:
+                                    currentCellActor.move(0, -1);
+                                    break;
+                            }
                         }
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 }
-            }break;
+            }
         }
-    }
-    public void test() {
-        var wrapper = new Object(){ int num = 0; };
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-
-        Runnable task = () -> {
-            System.out.println(wrapper.num);
-            wrapper.num++;
-            if(wrapper.num > 20) executor.shutdownNow();
-        };
-
-        executor.scheduleAtFixedRate(task, 0, 500, TimeUnit.MILLISECONDS);
-        //executor.shutdownNow();
-        //executor.scheduleAtFixedRate(task, 0, 300, TimeUnit.MILLISECONDS);
     }
     public void setMap(GameMap map) {this.map = map;}
     public GameMap getMap() {return this.map;}
+    public void setUI(UI ui) {this.ui = ui;}
 }

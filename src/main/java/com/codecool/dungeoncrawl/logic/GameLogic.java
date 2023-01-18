@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.ui.UI;
 
 import java.util.List;
 
@@ -52,4 +53,5 @@ public class GameLogic {
     public List<GameMap> getAllMaps() {
         return allMaps;
     }
+    public void setEnemyHandlerUI(UI ui) {this.enemyHandler.setUI(ui);}
 }

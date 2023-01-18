@@ -32,6 +32,7 @@ public class UI {
                 logic.getMapWidth() * Tiles.TILE_WIDTH,
                 logic.getMapHeight() * Tiles.TILE_WIDTH);
         this.logic = logic;
+        this.logic.setEnemyHandlerUI(this);
         this.context = canvas.getGraphicsContext2D();
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
