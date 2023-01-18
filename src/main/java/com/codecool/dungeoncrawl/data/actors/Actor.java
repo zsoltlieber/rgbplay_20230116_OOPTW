@@ -11,7 +11,7 @@ public abstract class Actor implements Drawable {
     protected int xpValue;
     protected String name;
     protected int health = 30;
-    protected int attack;
+    protected int attack = 10;
     protected int defense;
     protected Cell cell;
 
