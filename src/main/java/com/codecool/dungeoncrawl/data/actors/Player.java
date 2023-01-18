@@ -10,5 +10,4 @@ public class Player extends Actor {
     public String getTileName() {
         return "player";
     }
-
 }
