@@ -26,9 +26,19 @@ public class Tiles {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
+        tileMap.put("gate", new Tile(2, 6));
         tileMap.put("player", new Tile(27, 0));
+        //enemies
         tileMap.put("skeleton", new Tile(29, 6));
-        tileMap.put("fogOfWar", new Tile(24,4));
+        tileMap.put("zombie", new Tile(25, 9));
+        tileMap.put("wolf", new Tile(21, 9));
+        //items
+        tileMap.put("health potion", new Tile(26,22));
+        tileMap.put("club", new Tile(2, 24));
+        tileMap.put("sword", new Tile(0, 30));
+        tileMap.put("axe", new Tile(10, 30));
+        tileMap.put("shield", new Tile(5, 25));
+        tileMap.put("xp ring", new Tile(13, 28));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
