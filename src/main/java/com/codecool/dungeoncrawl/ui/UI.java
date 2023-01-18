@@ -61,6 +61,9 @@ public class UI {
 
     public void mapChange(Cell cell){
 
+        System.out.println(cell.getX());
+        System.out.println(cell.getY());
+
         List <Gate> filteredGates = logic.getMap().getGates().stream()
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
