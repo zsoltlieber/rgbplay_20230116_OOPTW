@@ -10,6 +10,7 @@ import com.codecool.dungeoncrawl.ui.UI;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 public class EnemyHandler {
     private GameMap map;
     private UI ui;
-    private List<ScheduledExecutorService> executors = new LinkedList<>();
+    private ScheduledExecutorService executor = Executors.newScheduledThreadPool(EnemyType.values().length);
     public EnemyHandler(GameMap map) {
         this.map = map;
     }
@@ -25,9 +26,7 @@ public class EnemyHandler {
     public void start() {
         int i = 0;
         for(EnemyType enemyType : EnemyType.values()) {
-            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            executors.add(executor);
-            executors.get(i).scheduleAtFixedRate(() -> {
+            executor.scheduleAtFixedRate(() -> {
                     moveEnemies(map, enemyType.getName());
                     /*try {
                         ui.refresh();
