@@ -61,6 +61,9 @@ public class UI {
 
     public void mapChange(Cell cell){
 
+        System.out.println(cell.getX());
+        System.out.println(cell.getY());
+
         List <Gate> filteredGates = logic.getMap().getGates().stream()
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
@@ -70,9 +73,15 @@ public class UI {
             Player player = logic.getMap().getPlayer();
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
+
+            logic.getMap().setPlayer(player);
+            logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
+
             refresh();
+        }else{
+            System.out.println("no such gate found");
         }
-        System.out.println("no such gate found");
+
     }
 
     public void refresh() {
@@ -87,14 +96,16 @@ public class UI {
         for(int targetX = 0; targetX < VIEWPORT_WIDTH;targetX++){
             for(int targetY = 0; targetY < VIEWPORT_HEIGHT;targetY++){
 
-                int sourceX = playerPosition.getX()-halfOfTheViewPortWidth+targetX;
-                int sourceY = playerPosition.getY()-halfOfTheViewPortHeight+targetY;
 
-                Cell cell = new Cell(new GameMap(1,1,CellType.EMPTY),0,0, CellType.EMPTY);
+                int sourceX = playerPosition.getX()-halfOfTheViewPortWidth + targetX;
+                int sourceY = playerPosition.getY()-halfOfTheViewPortHeight  +targetY;
+
+                Cell cell = new Cell(new GameMap(1,1, CellType.EMPTY),0,0, CellType.EMPTY);
 
                 if(!(sourceX <0 || sourceY< 0 || sourceX>= logic.getMapWidth() || sourceY>= logic.getMapHeight())){
                     cell = logic.getCell(sourceX, sourceY);
                 }
+
 
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(),targetX, targetY);
@@ -113,15 +124,16 @@ public class UI {
                     cell = logic.getCell(x, y);
                 }
 
+
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(),targetX, targetY);
                 } else {
                     Tiles.drawTile(context, cell, targetX, targetY);
                 }
-               targetY++;
             }
-            targetX++;
         }*/
+
         mainStage.setHealthLabelText(logic.getPlayerHealth());
+
     }
 }
