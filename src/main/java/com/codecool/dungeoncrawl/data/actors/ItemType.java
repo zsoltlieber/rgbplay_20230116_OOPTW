@@ -3,9 +3,9 @@ package com.codecool.dungeoncrawl.data.actors;
 public enum ItemType {
     DEFAULT("default", 0, 0, 0, 0, 'Ó'),
     HEALTH_POTION("health potion", 10, 0, 0, 0, 'H'),
-    CLUB("club", 0, 10, 0, 0, 'C'),
-    SWORD("sword", 0, 20, 0, 0, 'S'),
-    AXE("axe", 0, 30, 0, 0, 'A'),
+    CLUB("club", 0, 20, 0, 0, 'C'),
+    SWORD("sword", 0, 30, 0, 0, 'S'),
+    AXE("axe", 0, 40, 0, 0, 'A'),
     SHIELD("shield", 0, 0, 10, 0, 'D'),
     XP_RING("xp ring", 0, 0, 0, 10, 'X');
 
