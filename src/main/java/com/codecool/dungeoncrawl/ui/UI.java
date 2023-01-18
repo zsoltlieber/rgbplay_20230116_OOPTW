@@ -66,7 +66,7 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent,logic);
+            keyHandler.perform(keyEvent, logic, this);
         }
         refresh();
     }

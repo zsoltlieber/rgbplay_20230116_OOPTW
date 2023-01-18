@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.logic.GameLogic;
+import com.codecool.dungeoncrawl.ui.UI;
 
 public abstract class Actor implements Drawable {
     protected int currentXP = 0;
@@ -24,7 +25,7 @@ public abstract class Actor implements Drawable {
         this.cell = cell;
     }
 
-    public void move(int dx, int dy) {
+    public void move(int dx, int dy, UI ui) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         CellType currentCellType = cell.getType();
         if(nextCell.getType() == CellType.FLOOR || nextCell.getType() == CellType.EMPTY) {
@@ -40,12 +41,10 @@ public abstract class Actor implements Drawable {
             nextCellActor.damageActor(this.attack);
             if(currentCellType == CellType.PLAYER) {
                 if(nextCellActor.isDead()) {
-                    this.gainXP(nextCellActor.getXpValue());
-                    cell.setActor(null);
-                    cell.setType(CellType.FLOOR);
-                    nextCell.setActor(this);
-                    nextCell.setType(currentCellType == CellType.ENEMY ? CellType.ENEMY : CellType.PLAYER);
-                    cell = nextCell;
+                    this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
+                    System.out.println("XP gained: " + nextCellActor.getXpValue());
+                    nextCell.setActor(null);
+                    nextCell.setType(CellType.FLOOR);
                 }
             } else if (currentCellType == CellType.ENEMY) {
                 if(nextCellActor.isDead()) {
@@ -53,6 +52,8 @@ public abstract class Actor implements Drawable {
                 }
             }
             nextCell.setActor(nextCellActor);
+        } else if (nextCell.getType() == CellType.GATE && currentCellType == CellType.PLAYER) {
+
         } else {
             System.out.println("Not implemented yet!");
         }

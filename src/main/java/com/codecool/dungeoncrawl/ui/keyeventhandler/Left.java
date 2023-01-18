@@ -11,9 +11,9 @@ public class Left implements KeyHandler {
     public static final KeyCode code2 = KeyCode.A;
 
     @Override
-    public void perform(KeyEvent event, GameLogic logic) {
+    public void perform(KeyEvent event, GameLogic logic, UI ui) {
         if(code1.equals(event.getCode()) || code2.equals(event.getCode()))
-            logic.getMap().getPlayer().move(-1, 0);
+            logic.getMap().getPlayer().move(-1, 0, ui);
 
     }
 }
