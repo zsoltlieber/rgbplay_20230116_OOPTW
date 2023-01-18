@@ -70,10 +70,13 @@ public class UI {
             Player player = logic.getMap().getPlayer();
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
-
+            logic.getMap().setPlayer(player);
+            logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
             refresh();
+        }else{
+            System.out.println("no such gate found");
         }
-        System.out.println("no such gate found");
+
     }
 
     public void refresh() {
