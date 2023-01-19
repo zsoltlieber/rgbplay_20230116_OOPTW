@@ -5,7 +5,7 @@
 #...s...#..#......s#
 #......s#.h#..s....#
 #fffffff####fffffff#
-#t.......L.........$
+#t.SSSD..L.........$
 #fffffff####fffffff#
 #vvvvvvv#vv#......h#
 #..vvv..#vv#.......#
