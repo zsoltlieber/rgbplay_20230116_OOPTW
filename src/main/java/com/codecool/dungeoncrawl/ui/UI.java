@@ -41,6 +41,7 @@ public class UI {
         this.keyHandlers = keyHandlers;
     }
 
+
     public void setUpPain(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -56,24 +57,29 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-        refresh();
+        //refresh();
     }
 
     public void mapChange(Cell cell) {
 
-        List<Gate> filteredGates = logic.getMap().getGates().stream()
+        System.out.println(cell.getX());
+        System.out.println(cell.getY());
 
+        List <Gate> filteredGates = logic.getMap().getGates().stream()
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
 
-        if (filteredGates.size() > 0) {
+        if(filteredGates.size()> 0 ){
             Gate gate = filteredGates.get(0);
             Player player = logic.getMap().getPlayer();
+
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
 
+            player.getCell().setType(CellType.PLAYER);
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
+            //refresh();
         }else{
             System.out.println("no such gate found");
         }
@@ -92,7 +98,6 @@ public class UI {
         for(int targetX = 0; targetX < VIEWPORT_WIDTH;targetX++){
             for(int targetY = 0; targetY < VIEWPORT_HEIGHT;targetY++){
 
-
                 int sourceX = playerPosition.getX()-halfOfTheViewPortWidth + targetX;
                 int sourceY = playerPosition.getY()-halfOfTheViewPortHeight  +targetY;
 
@@ -102,7 +107,6 @@ public class UI {
                     cell = logic.getCell(sourceX, sourceY);
                 }
 
-
                 if (cell.getActor() != null) {
                     Tiles.drawTile(context, cell.getActor(),targetX, targetY);
                 } else {
@@ -110,8 +114,6 @@ public class UI {
                 }
             }
         }
-
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
 
     }
 

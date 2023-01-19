@@ -15,7 +15,12 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    static String[] mapFiles = new String[]{"/map0.txt","/map1.txt","/map2.txt"};
+    static String[] mapFiles = new String[]{
+            "map0.txt",
+            "map1.txt",
+            "map2.txt",
+            "map3.txt"
+            };
 
     public static List<GameMap> loadAllMaps(){
         List<GameMap> output = new ArrayList<>();
@@ -60,7 +65,7 @@ public class MapLoader {
                         case 'z':
                         case 'w':
                             cell.setType(CellType.ENEMY);
-                            new Enemy(cell, Enemy.getEnemyType(currentChar));
+                            map.addToEnemies(new Enemy(cell, Enemy.getEnemyType(currentChar)));
                             break;
                         case 'H':
                         case 'C':
@@ -78,6 +83,51 @@ public class MapLoader {
                             cell.setType(CellType.PLAYER);
                             map.setPlayer(new Player(cell));
                             break;
+                        case 'p':
+                            cell.setType(CellType.PILLAR);
+                            break;
+                        case '0':
+                            cell.setType(CellType.ALTAR0);
+                            break;
+                        case '1':
+                            cell.setType(CellType.ALTAR1);
+                            break;
+                        case '2':
+                            cell.setType(CellType.ALTAR2);
+                            break;
+                        case '3':
+                            cell.setType(CellType.ALTAR3);
+                            break;
+                        case '4':
+                            cell.setType(CellType.ALTAR4);
+                            break;
+                        case '5':
+                            cell.setType(CellType.ALTAR5);
+                            break;
+                        case '6':
+                            cell.setType(CellType.ALTAR6);
+                            break;
+                        case '7':
+                            cell.setType(CellType.ALTAR7);
+                            break;
+                        case '8':
+                            cell.setType(CellType.ALTAR8);
+                            break;
+                        case 't':
+                            cell.setType(CellType.TORCH);
+                            break;
+                        case 'o':
+                            cell.setType(CellType.SPECIAL_SKULL);
+                            break;
+                        case 'f':
+                            cell.setType(CellType.FENCE);
+                            break;
+                        case 'v':
+                            cell.setType(CellType.WATER);
+                            break;
+                        case 'c':
+                            cell.setType(CellType.CANAL);
+                            break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + currentChar + "'");
                     }
@@ -87,7 +137,7 @@ public class MapLoader {
     }
 
     private static GameMap loadMap(String fileName) {
-        InputStream is = MapLoader.class.getResourceAsStream(fileName);
+        InputStream is = MapLoader.class.getResourceAsStream("/maps/" + fileName);
         Scanner scanner = new Scanner(is);
         int width = scanner.nextInt();
         int height = scanner.nextInt();

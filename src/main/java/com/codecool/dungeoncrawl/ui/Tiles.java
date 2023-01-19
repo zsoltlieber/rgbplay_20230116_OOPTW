@@ -26,7 +26,7 @@ public class Tiles {
         tileMap.put("empty", new Tile(0, 0));
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
-        tileMap.put("gate", new Tile(2, 6));
+        tileMap.put("gate", new Tile(3, 3));
         tileMap.put("player", new Tile(27, 0));
         //enemies
         tileMap.put("skeleton", new Tile(29, 6));
@@ -39,6 +39,22 @@ public class Tiles {
         tileMap.put("axe", new Tile(10, 30));
         tileMap.put("shield", new Tile(5, 25));
         tileMap.put("xp ring", new Tile(13, 28));
+        //decorations
+        tileMap.put("pillar",new Tile(3,13));
+        tileMap.put("altar0",new Tile(0,16));
+        tileMap.put("altar1",new Tile(1,16));
+        tileMap.put("altar2",new Tile(2,16));
+        tileMap.put("altar3",new Tile(0,17));
+        tileMap.put("altar4",new Tile(17,17));
+        tileMap.put("altar5",new Tile(2,17));
+        tileMap.put("altar6",new Tile(0,18));
+        tileMap.put("altar7",new Tile(1,18));
+        tileMap.put("altar8",new Tile(2,18));
+        tileMap.put("torch", new Tile(4,15));
+        tileMap.put("special-skull", new Tile(22,23));
+        tileMap.put("fence", new Tile(0,6));
+        tileMap.put("water", new Tile(8,5));
+        tileMap.put("canal", new Tile(8,10));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
