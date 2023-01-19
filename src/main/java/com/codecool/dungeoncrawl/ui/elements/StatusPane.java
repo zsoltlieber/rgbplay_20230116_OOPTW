@@ -27,6 +27,8 @@ public class StatusPane {
     private Label enemyAttackValueLabel;
     private Label enemyDefenceTextLabel;
     private Label enemyDefenceValueLabel;
+    private Label inventoryTextLabel;
+    private Label inventoryValueLabel;
 
     public StatusPane() {
         ui = new GridPane();
@@ -38,6 +40,8 @@ public class StatusPane {
         attackValueLabel = new Label();
         defenceTextLabel = new Label("Defence: ");
         defenceValueLabel = new Label();
+        inventoryTextLabel = new Label("Inventory: ");
+        inventoryValueLabel = new Label();
         rowSign = new Label("=============");
         enemyHealthTextLabel = new Label("Enemy health");
         enemyHealthValueLabel = new Label();
@@ -47,6 +51,7 @@ public class StatusPane {
         enemyAttackValueLabel = new Label();
         enemyDefenceTextLabel = new Label("Enemy Defence");
         enemyDefenceValueLabel = new Label();
+
     }
 
     public BorderPane build() {
@@ -62,15 +67,17 @@ public class StatusPane {
         ui.add(attackValueLabel, 1, 4);
         ui.add(defenceTextLabel, 0, 6);
         ui.add(defenceValueLabel, 1, 6);
-        ui.add(rowSign, 0, 8);
-        ui.add(enemyHealthTextLabel, 0, 10);
-        ui.add(enemyHealthValueLabel, 1, 10);
-        ui.add(enemyXPTextLabel, 0, 12);
-        ui.add(enemyXPValueLabel, 1, 12);
-        ui.add(enemyAttackTextLabel, 0, 14);
-        ui.add(enemyAttackValueLabel, 1, 14);
-        ui.add(enemyDefenceTextLabel, 0, 16);
-        ui.add(enemyDefenceValueLabel, 1, 16);
+        ui.add(inventoryTextLabel, 0, 8);
+        ui.add(inventoryValueLabel, 1, 8);
+        ui.add(rowSign, 0, 10);
+        ui.add(enemyHealthTextLabel, 0, 12);
+        ui.add(enemyHealthValueLabel, 1, 12);
+        ui.add(enemyXPTextLabel, 0, 14);
+        ui.add(enemyXPValueLabel, 1, 14);
+        ui.add(enemyAttackTextLabel, 0, 16);
+        ui.add(enemyAttackValueLabel, 1, 16);
+        ui.add(enemyDefenceTextLabel, 0, 18);
+        ui.add(enemyDefenceValueLabel, 1, 18);
 
         BorderPane borderPane = new BorderPane();
         borderPane.setRight(ui);
@@ -107,4 +114,6 @@ public class StatusPane {
     public void setEnemyDefenceValueLabel(String text) {
         enemyDefenceValueLabel.setText(text);
     }
+
+    public void setInventoryValueLabel(String text) {inventoryValueLabel.setText(text);}
 }

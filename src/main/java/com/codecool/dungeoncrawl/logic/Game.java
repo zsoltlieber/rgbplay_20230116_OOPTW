@@ -27,12 +27,11 @@ public class Game extends Application {
         this.ui = new UI(logic, keyHandlers);
         ui.setUpPain(primaryStage);
 
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        /*ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
             ui.refresh();
-        },0, 50, TimeUnit.MILLISECONDS);
+        },0, 16, TimeUnit.MILLISECONDS);*/
         // 60 FPS - 16.6 MS
-        //
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();

@@ -28,7 +28,6 @@ public class UI {
     private GameLogic logic;
     private Stage primaryStage;
     private Set<KeyHandler> keyHandlers;
-
     private static int VIEWPORT_HEIGHT = 15;
     private static int VIEWPORT_WIDTH = 15;
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
@@ -61,7 +60,7 @@ public class UI {
        // refresh();
     }
 
-    public void mapChange(Cell cell){
+    public void mapChange(Cell cell) {
 
         System.out.println(cell.getX());
         System.out.println(cell.getY());
@@ -80,7 +79,7 @@ public class UI {
             player.getCell().setType(CellType.PLAYER);
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
-           // refresh();
+            //refresh();
         }else{
             System.out.println("no such gate found");
         }
@@ -118,8 +117,9 @@ public class UI {
 
     }
 
-    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
+    public void setPlayerParameters(int playerHealth, List<String> inventory, int playerXP, int playerAttack, int playerDefence) {
         mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setInventoryValueLabel(inventory.toString());
         mainStage.setXPValueLabel(String.valueOf(playerXP));
         mainStage.setAttackValueLabel(String.valueOf(playerAttack));
         mainStage.setDefenceValueLabel(String.valueOf(playerDefence));

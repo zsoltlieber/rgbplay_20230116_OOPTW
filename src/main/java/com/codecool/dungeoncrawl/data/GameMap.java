@@ -12,6 +12,11 @@ public class GameMap {
     private int height;
     private Cell[][] cells;
     private List<Gate> gates = new ArrayList<>();
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
     private List<Enemy> enemies = new ArrayList<>();
 
     private Player player;

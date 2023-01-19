@@ -4,8 +4,14 @@ import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.EnemyType;
 import com.codecool.dungeoncrawl.ui.UI;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,54 +30,58 @@ public class EnemyHandler {
     }
 
     public void start() {
-        int i = 0;
         for(EnemyType enemyType : EnemyType.values()) {
-            executor.scheduleAtFixedRate(() -> {
-                    moveEnemies(map, enemyType.getName());
-                    /*try {
-                        ui.refresh();
-                    } catch(Exception e) {
-                        System.out.println("Error when trying to refresh in enemy handler.");
-                    }*/
-            }, 0, enemyType.getFrequency(), TimeUnit.MILLISECONDS);
-            i++;
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis( enemyType.getFrequency() ), ev -> {
+                //System.out.println("executed " + enemyType.getName() + " movement");
+                moveEnemies(map, enemyType);
+                ui.refresh();
+            }));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
         }
     }
 
-    private void moveEnemies(GameMap map, String enemyName) {
+        /*for(EnemyType enemyType : EnemyType.values()) {
+            System.out.println(enemyType.getName().toUpperCase());
+            executor.scheduleAtFixedRate(() -> {
+                    moveEnemies(map, enemyType);
+            }, 0, enemyType.getFrequency(), TimeUnit.SECONDS);
+        }*/
+
+    private void moveEnemies(GameMap map, EnemyType enemyType) {
         int width = map.getWidth();
         int height = map.getHeight();
-        Random random = new Random();
 
         for(int i = 0; i < width; i++) {
             for(int j = 0; j < height; j++ ) {
                 try {
                     Cell currentCell = map.getCell(i, j);
-                    Actor currentCellActor;
-                    if((currentCellActor = currentCell.getActor()) != null) {
-                        if (currentCell.getType() == CellType.ENEMY && currentCellActor.getName().equals(enemyName)) {
-                            System.out.println(currentCellActor.getName());
-                            switch(random.nextInt(4)) {
-                                case 0:
-                                    currentCellActor.move(1, 0);
-                                    break;
-                                case 1:
-                                    currentCellActor.move(-1, 0);
-                                    break;
-                                case 2:
-                                    currentCellActor.move(0, 1);
-                                    break;
-                                case 3:
-                                    currentCellActor.move(0, -1);
-                                    break;
-                            }
-                        }
+                    Actor currentCellActor = currentCell.getActor();
+                    if(
+                            currentCellActor != null &&
+                            currentCell.getType() == CellType.ENEMY &&
+                            currentCellActor.didntMoveThisRound() &&
+                            currentCellActor.getName().equals(enemyType.getName())
+                    ) {
+                        int playerX = map.getPlayer().getX();
+                        int playerY = map.getPlayer().getY();
+                        int[] enemyMoveXY = Enemy.getEnemyMove(playerX, playerY, currentCellActor, enemyType);
+
+                        currentCellActor.moveEnemy(enemyMoveXY[0], enemyMoveXY[1]);
+                        currentCellActor.setDidntMoveThisRound(false);
                     }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                }
+                } catch (ArrayIndexOutOfBoundsException e) {e.printStackTrace();}
             }
         }
+        resetEnemiesOfTypeInMap(enemyType);
+    }
+    private void resetEnemiesOfTypeInMap(EnemyType enemyType) {
+        List<Enemy> mapEnemyList = map.getEnemies();
+        for(Enemy enemy : mapEnemyList) {
+            if(enemy.getName().equals(enemyType.getName()))
+                enemy.setDidntMoveThisRound(true);
+        }
+        map.setEnemies(mapEnemyList);
     }
     public void setMap(GameMap map) {this.map = map;}
     public GameMap getMap() {return this.map;}

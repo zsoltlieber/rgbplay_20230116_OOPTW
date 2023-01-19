@@ -25,9 +25,11 @@ public class MainStage {
     public Scene getScene() {
         return scene;
     }
-
     public void setHealthValueLabel(String text) {
         this.statusPane.setHealthValueLabel(text);
+    }
+    public void setInventoryValueLabel(String text) {
+        this.statusPane.setInventoryValueLabel(text);
     }
     public void setXPValueLabel(String text) {
         this.statusPane.setXPValueLabel(text);
@@ -43,4 +45,6 @@ public class MainStage {
     public void setEnemyAttackValueLabel(String text) {    this.statusPane.setEnemyAttackValueLabel(text);    }
     public void setEnemyDefenceValueLabel(String text) {     this.statusPane.setEnemyDefenceValueLabel(text);   }
 
+    public void setHealthLabelText(String playerHealth) {
+    }
 }
