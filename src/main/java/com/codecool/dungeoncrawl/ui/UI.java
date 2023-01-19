@@ -74,6 +74,7 @@ public class UI {
 
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
+
             player.getCell().setType(CellType.PLAYER);
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
@@ -128,7 +129,9 @@ public class UI {
                     Tiles.drawTile(context, cell, x, y);
                 }
             }
-        }
-        mainStage.setHealthLabelText(logic.getPlayerHealth());*/
+        }*/
+
+        mainStage.setHealthLabelText(logic.getPlayerHealth());
+
     }
 }
