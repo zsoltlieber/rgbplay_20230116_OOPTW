@@ -36,10 +36,12 @@ public class UI {
                 VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
                 VIEWPORT_HEIGHT * Tiles.TILE_WIDTH);
         this.logic = logic;
+        this.logic.setEnemyHandlerUI(this);
         this.context = canvas.getGraphicsContext2D();
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
     }
+
 
     public void setUpPain(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -114,24 +116,20 @@ public class UI {
             }
         }
 
-        /*for (int x = playerPosition.getX()-halfOfTheViewPortWidth; x <= playerPosition.getX()+halfOfTheViewPortWidth; x++) {
-            for (int y = playerPosition.getY()-halfOfTheViewPortHeight; y <= playerPosition.getY()+halfOfTheViewPortHeight; y++) {
-
-                Cell cell = new Cell(new GameMap(1,1,CellType.EMPTY),0,0, CellType.EMPTY);
-
-                if(!(x <0 || y< 0 || x>= logic.getMapWidth() || y>= logic.getMapHeight())){
-                    cell = logic.getCell(x, y);
-                }
-
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
-                } else {
-                    Tiles.drawTile(context, cell, x, y);
-                }
-            }
-        }*/
-
         mainStage.setHealthLabelText(logic.getPlayerHealth());
 
+    }
+
+    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
+        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setXPValueLabel(String.valueOf(playerXP));
+        mainStage.setAttackValueLabel(String.valueOf(playerAttack));
+        mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
+    }
+    public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
+        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
+        mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
+        mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
+        mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
     }
 }

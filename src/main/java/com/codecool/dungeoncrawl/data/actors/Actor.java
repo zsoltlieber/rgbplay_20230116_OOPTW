@@ -9,6 +9,8 @@ import com.codecool.dungeoncrawl.ui.UI;
 
 import java.util.List;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 public abstract class Actor implements Drawable {
     protected int currentXP = 0;
     protected int currentLevel = 1;
@@ -16,7 +18,7 @@ public abstract class Actor implements Drawable {
     protected String name;
     protected int health = 30;
     protected int attack = 10;
-    protected int defense;
+    protected int defense =0;
     protected Cell cell;
 
     protected CellType previousStepType = CellType.ALTAR4;
@@ -45,7 +47,6 @@ public abstract class Actor implements Drawable {
     }
 
     public void move(int dx, int dy, UI ui) {
-
         Cell nextCell = cell.getNeighbor(dx, dy);
         CellType currentCellType = cell.getType();
 
@@ -62,6 +63,8 @@ public abstract class Actor implements Drawable {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
             if(currentCellType == CellType.PLAYER) {
+                ui.setPlayerParameters(this.health, this.xpValue, this.attack, this.defense);
+                ui.setEnemyParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
                 if(nextCellActor.isDead()) {
                     this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
                     System.out.println("XP gained: " + nextCellActor.getXpValue());
@@ -69,6 +72,8 @@ public abstract class Actor implements Drawable {
                     nextCell.setType(CellType.FLOOR);
                 }
             } else if (currentCellType == CellType.ENEMY) {
+            ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
+            ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);
                 if(nextCellActor.isDead()) {
                     System.out.println("IMPLEMENT GAME OVER");
                 }
@@ -125,6 +130,7 @@ public abstract class Actor implements Drawable {
     public int getXpValue() {return this.xpValue;}
     public int getCurrentXP() {return this.currentXP;}
     public int getCurrentLevel() {return this.currentLevel;}
+    public String getName() {return this.name;}
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;

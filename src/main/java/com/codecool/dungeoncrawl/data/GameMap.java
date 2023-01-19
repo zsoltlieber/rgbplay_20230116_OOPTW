@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.logic.EnemyHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class GameMap {
     private List<Enemy> enemies = new ArrayList<>();
 
     private Player player;
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
