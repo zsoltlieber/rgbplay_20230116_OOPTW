@@ -137,8 +137,11 @@ public class MapLoader {
                         case 'F':
                             cell.setType(CellType.FIRE);
                             break;
-                        case 'l':
+                        case 'L':
                             cell.setType(CellType.LOCKED_DOOR);
+                            break;
+                        case 'O':
+                            cell.setType(CellType.OPEN_DOOR);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + currentChar + "'");

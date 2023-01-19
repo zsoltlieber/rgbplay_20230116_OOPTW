@@ -29,6 +29,7 @@ public abstract class Actor implements Drawable {
             CellType.FLOOR,
             CellType.EMPTY,
             CellType.CANAL,
+            CellType.OPEN_DOOR,
             CellType.SKULL,
             CellType.ALTAR0,
             CellType.ALTAR1,
