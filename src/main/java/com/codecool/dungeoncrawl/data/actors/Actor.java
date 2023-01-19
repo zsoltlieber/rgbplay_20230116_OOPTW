@@ -28,6 +28,8 @@ public abstract class Actor implements Drawable {
     List<CellType> walkable =List.of(
             CellType.FLOOR,
             CellType.EMPTY,
+            CellType.CANAL,
+            CellType.SKULL,
             CellType.ALTAR0,
             CellType.ALTAR1,
             CellType.ALTAR2,

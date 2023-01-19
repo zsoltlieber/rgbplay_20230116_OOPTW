@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.data.actors;
+package com.codecool.dungeoncrawl.data;
 
 import java.util.Objects;
 

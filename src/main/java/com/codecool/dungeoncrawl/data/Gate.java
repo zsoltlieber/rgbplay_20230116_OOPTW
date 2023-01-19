@@ -1,7 +1,5 @@
 package com.codecool.dungeoncrawl.data;
 
-import com.codecool.dungeoncrawl.data.actors.Position;
-
 public class Gate {
 
     private Position gatePosition;
