@@ -1,13 +1,26 @@
 package com.codecool.dungeoncrawl.data;
 
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.logic.EnemyHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
+    private List<Gate> gates = new ArrayList<>();
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    private List<Enemy> enemies = new ArrayList<>();
 
     private Player player;
+
 
     public GameMap(int width, int height, CellType defaultCellType) {
         this.width = width;
@@ -18,6 +31,10 @@ public class GameMap {
                 cells[x][y] = new Cell(this, x, y, defaultCellType);
             }
         }
+    }
+
+    public  void addGateToMap( Gate gate){
+        gates.add(gate);
     }
 
     public Cell getCell(int x, int y) {
@@ -38,5 +55,17 @@ public class GameMap {
 
     public int getHeight() {
         return height;
+    }
+
+    public List<Gate> getGates() {
+        return gates;
+    }
+
+    public void addToEnemies(Enemy enemy){
+        enemies.add(enemy);
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
     }
 }

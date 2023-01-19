@@ -1,6 +1,11 @@
 package com.codecool.dungeoncrawl.ui;
 
 import com.codecool.dungeoncrawl.data.Cell;
+import com.codecool.dungeoncrawl.data.CellType;
+import com.codecool.dungeoncrawl.data.GameMap;
+import com.codecool.dungeoncrawl.data.Gate;
+import com.codecool.dungeoncrawl.data.actors.Player;
+import com.codecool.dungeoncrawl.data.Position;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.elements.MainStage;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.KeyHandler;
@@ -11,7 +16,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.lang.management.OperatingSystemMXBean;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UI {
     private Canvas canvas;
@@ -19,22 +27,28 @@ public class UI {
 
     private MainStage mainStage;
     private GameLogic logic;
+    private Stage primaryStage;
     private Set<KeyHandler> keyHandlers;
-
-
+    private static int VIEWPORT_HEIGHT = 20;
+    private static int VIEWPORT_WIDTH = 20;
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
-                logic.getMapWidth() * Tiles.TILE_WIDTH,
-                logic.getMapHeight() * Tiles.TILE_WIDTH);
+                VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
+                VIEWPORT_HEIGHT * Tiles.TILE_WIDTH);
         this.logic = logic;
+        this.logic.setEnemyHandlerUI(this);
         this.context = canvas.getGraphicsContext2D();
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
     }
 
+
     public void setUpPain(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
         Scene scene = mainStage.getScene();
         primaryStage.setScene(scene);
+
         logic.setup();
         refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
@@ -42,24 +56,85 @@ public class UI {
 
     private void onKeyPressed(KeyEvent keyEvent) {
         for (KeyHandler keyHandler : keyHandlers) {
-            keyHandler.perform(keyEvent, logic.getMap());
+            keyHandler.perform(keyEvent, logic, this);
         }
-        refresh();
+       refresh();
+    }
+
+    public void mapChange(Cell cell) {
+
+        List <Gate> filteredGates = logic.getMap().getGates().stream()
+                .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
+                .collect(Collectors.toList());
+
+        if(filteredGates.size()> 0 ){
+            Gate gate = filteredGates.get(0);
+            Player player = logic.getMap().getPlayer();
+
+            logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
+            player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
+
+            player.getCell().setType(CellType.PLAYER);
+            logic.getMap().setPlayer(player);
+            logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
+            refresh();
+        }else{
+            System.out.println("no such gate found");
+        }
+
     }
 
     public void refresh() {
+
+        int halfOfTheViewPortWidth = VIEWPORT_WIDTH /2;
+        int halfOfTheViewPortHeight = VIEWPORT_HEIGHT /2;
+        Position playerPosition = logic.getMap().getPlayer().getCell().getPosition();
+
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for (int x = 0; x < logic.getMapWidth(); x++) {
-            for (int y = 0; y < logic.getMapHeight(); y++) {
-                Cell cell = logic.getCell(x, y);
+
+        for(int targetX = 0; targetX < VIEWPORT_WIDTH;targetX++){
+            for(int targetY = 0; targetY < VIEWPORT_HEIGHT;targetY++){
+
+                int sourceX = playerPosition.getX()-halfOfTheViewPortWidth + targetX;
+                int sourceY = playerPosition.getY()-halfOfTheViewPortHeight  +targetY;
+
+                Cell cell = new Cell(new GameMap(1,1, CellType.EMPTY),0,0, CellType.EMPTY);
+
+                if(!(sourceX <0 || sourceY< 0 || sourceX>= logic.getMapWidth() || sourceY>= logic.getMapHeight())){
+                    cell = logic.getCell(sourceX, sourceY);
+                }
+
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(), x, y);
+                    Tiles.drawTile(context, cell.getActor(),targetX, targetY);
                 } else {
-                    Tiles.drawTile(context, cell, x, y);
+                    Tiles.drawTile(context, cell, targetX, targetY);
                 }
             }
         }
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
+
+        Player player = logic.getMap().getPlayer();
+        setPlayerParameters(
+                player.getHealth(), player.getInventory(), player.getCurrentXP(), player.getAttack(), player.getDefense()
+        );
+
+        if(player.isDead()) {
+            player.setHealth(1);
+            logic.setMap(logic.getAllMaps().get(7));
+        }
+    }
+
+    public void setPlayerParameters(int playerHealth, List<String> inventory, int playerXP, int playerAttack, int playerDefence) {
+        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setInventoryValueLabel(inventory.toString());
+        mainStage.setXPValueLabel(String.valueOf(playerXP));
+        mainStage.setAttackValueLabel(String.valueOf(playerAttack));
+        mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
+    }
+    public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
+        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
+        mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
+        mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
+        mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
     }
 }

@@ -25,8 +25,26 @@ public class MainStage {
     public Scene getScene() {
         return scene;
     }
+    public void setHealthValueLabel(String text) {
+        this.statusPane.setHealthValueLabel(text);
+    }
+    public void setInventoryValueLabel(String text) {
+        this.statusPane.setInventoryValueLabel(text);
+    }
+    public void setXPValueLabel(String text) {
+        this.statusPane.setXPValueLabel(text);
+    }
+    public void setAttackValueLabel(String text) {
+        this.statusPane.setAttackValueLabel(text);
+    }
+    public void setDefenceValueLabel(String text) {
+        this.statusPane.setDefenceValueLabel(text);
+    }
+    public void setEnemyHealthValueLabel(String text) {    this.statusPane.setEnemyHealthValueLabel(text);    }
+    public void setEnemyXPValueLabel(String text) {    this.statusPane.setEnemyXPValueLabel(text);    }
+    public void setEnemyAttackValueLabel(String text) {    this.statusPane.setEnemyAttackValueLabel(text);    }
+    public void setEnemyDefenceValueLabel(String text) {     this.statusPane.setEnemyDefenceValueLabel(text);   }
 
-    public void setHealthLabelText(String text) {
-        this.statusPane.setHealthValue(text);
+    public void setHealthLabelText(String playerHealth) {
     }
 }

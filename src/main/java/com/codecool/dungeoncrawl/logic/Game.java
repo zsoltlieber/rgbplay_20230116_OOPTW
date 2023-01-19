@@ -3,9 +3,13 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.ui.UI;
 import com.codecool.dungeoncrawl.ui.keyeventhandler.*;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Game extends Application {
     private UI ui;
@@ -22,6 +26,12 @@ public class Game extends Application {
         this.logic = new GameLogic();
         this.ui = new UI(logic, keyHandlers);
         ui.setUpPain(primaryStage);
+
+        /*ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor.scheduleAtFixedRate(() -> {
+            ui.refresh();
+        },0, 16, TimeUnit.MILLISECONDS);*/
+        // 60 FPS - 16.6 MS
 
         primaryStage.setTitle("Dungeon Crawl");
         primaryStage.show();
