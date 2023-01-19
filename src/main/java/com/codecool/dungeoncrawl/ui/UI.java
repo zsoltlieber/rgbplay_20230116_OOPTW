@@ -36,6 +36,7 @@ public class UI {
                 VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
                 VIEWPORT_HEIGHT * Tiles.TILE_WIDTH);
         this.logic = logic;
+        this.logic.setEnemyHandlerUI(this);
         this.context = canvas.getGraphicsContext2D();
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
@@ -49,7 +50,7 @@ public class UI {
         primaryStage.setScene(scene);
 
         logic.setup();
-        refresh();
+        //refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
     }
 
@@ -57,7 +58,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-        refresh();
+        //refresh();
     }
 
     public void mapChange(Cell cell) {
