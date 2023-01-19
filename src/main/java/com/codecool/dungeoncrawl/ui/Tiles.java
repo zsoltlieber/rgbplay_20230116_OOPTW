@@ -60,7 +60,7 @@ public class Tiles {
         tileMap.put("skull", new Tile(18,24));
         tileMap.put("fire", new Tile(15,10));
         tileMap.put("locked-door", new Tile(0,9));
-        tileMap.put("open-door", new Tile(0,11));
+        tileMap.put("open-door", new Tile(2,9));
     }
 
     public static void drawTile(GraphicsContext context, Drawable d, int x, int y) {
