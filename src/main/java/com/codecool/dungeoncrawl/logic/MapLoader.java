@@ -22,7 +22,8 @@ public class MapLoader {
             "map3.txt",
             "map4.txt",
             "map5.txt",
-            "map6.txt"
+            "map6.txt",
+            "gameover.txt"
             };
 
     public static List<GameMap> loadAllMaps(){
