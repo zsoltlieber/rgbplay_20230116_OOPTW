@@ -10,6 +10,7 @@ public enum CellType {
     WALL("wall"),
     SPECIAL_SKULL("special-skull"),
     FIRE("fire"),
+    LOCKED_DOOR("locked-door"),
     //decoration
     PILLAR("pillar"),
     ALTAR0("altar0"),
