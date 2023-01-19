@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Player extends Actor {
 
-    private List<Item> inventory = new ArrayList<>();
     public Player(Cell cell) {
         super(cell);
     }
@@ -15,11 +14,4 @@ public class Player extends Actor {
         return "player";
     }
 
-    public void addToInventory(Item item){
-        inventory.add(item);
-    }
-
-    public void removeFromInventory(Item item){
-        inventory.remove(item);
-    }
 }

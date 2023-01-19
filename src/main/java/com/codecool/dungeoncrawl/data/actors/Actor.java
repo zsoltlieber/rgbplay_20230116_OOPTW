@@ -7,6 +7,7 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.UI;
 
+import java.util.ArrayList;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public abstract class Actor implements Drawable {
     protected int health = 30;
     protected int attack = 10;
     protected int defense =0;
+    private List<Item> inventory = new ArrayList<>();
+
     protected Cell cell;
 
     protected CellType previousStepType = CellType.ALTAR4;
@@ -65,20 +68,19 @@ public abstract class Actor implements Drawable {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
             if(currentCellType == CellType.PLAYER) {
-                ui.setPlayerParameters(this.health, this.xpValue, this.attack, this.defense);
-                ui.setEnemyParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
                 if(nextCellActor.isDead()) {
                     this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
                     System.out.println("XP gained: " + nextCellActor.getXpValue());
                     nextCell.setActor(null);
                     nextCell.setType(CellType.FLOOR);
                 }
+                ui.setStatusParameters(cell.getActor(),nextCellActor);
             } else if (currentCellType == CellType.ENEMY) {
-            ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
-            ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);
                 if(nextCellActor.isDead()) {
                     System.out.println("IMPLEMENT GAME OVER");
+
                 }
+                ui.setStatusParameters(cell.getActor(),nextCellActor);
             }
             nextCell.setActor(nextCellActor);
         } else if (nextCell.getType() == CellType.GATE && currentCellType == CellType.PLAYER) {
@@ -155,6 +157,11 @@ public abstract class Actor implements Drawable {
     public int getCurrentXP() {return this.currentXP;}
     public int getCurrentLevel() {return this.currentLevel;}
     public String getName() {return this.name;}
+
+    public List<Item> getInventory() {
+        return inventory;
+    }
+
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;
@@ -175,5 +182,11 @@ public abstract class Actor implements Drawable {
     }
     public void damageActor(int damageNumber) {
         this.health -= damageNumber - this.defense;
+    }
+    public void addToInventory(Item item){
+        inventory.add(item);
+    }
+    public void removeFromInventory(Item item) {
+        inventory.remove(item);
     }
 }

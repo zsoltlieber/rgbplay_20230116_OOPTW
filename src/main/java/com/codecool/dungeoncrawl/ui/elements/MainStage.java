@@ -29,6 +29,9 @@ public class MainStage {
     public void setHealthValueLabel(String text) {
         this.statusPane.setHealthValueLabel(text);
     }
+    public void setLevelValueLabel(String text) {
+        this.statusPane.setLevelValueLabel(text);
+    }
     public void setXPValueLabel(String text) {
         this.statusPane.setXPValueLabel(text);
     }
@@ -38,9 +41,10 @@ public class MainStage {
     public void setDefenceValueLabel(String text) {
         this.statusPane.setDefenceValueLabel(text);
     }
-    public void setEnemyHealthValueLabel(String text) {    this.statusPane.setEnemyHealthValueLabel(text);    }
-    public void setEnemyXPValueLabel(String text) {    this.statusPane.setEnemyXPValueLabel(text);    }
-    public void setEnemyAttackValueLabel(String text) {    this.statusPane.setEnemyAttackValueLabel(text);    }
-    public void setEnemyDefenceValueLabel(String text) {     this.statusPane.setEnemyDefenceValueLabel(text);   }
-
+    public void setInventoryValueLabel(String text) {
+        this.statusPane.setInventoryValueLabel(text);
+    }
+    public void setEnemyHealthValueLabel(String text) {
+        this.statusPane.setEnemyHealthValueLabel(text);
+    }
 }

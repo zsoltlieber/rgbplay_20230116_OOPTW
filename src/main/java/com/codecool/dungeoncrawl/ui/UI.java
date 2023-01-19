@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.Gate;
+import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.Player;
 import com.codecool.dungeoncrawl.data.actors.Position;
 import com.codecool.dungeoncrawl.logic.GameLogic;
@@ -115,19 +116,15 @@ public class UI {
                 }
             }
         }
-
     }
 
-    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
-        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
-        mainStage.setXPValueLabel(String.valueOf(playerXP));
-        mainStage.setAttackValueLabel(String.valueOf(playerAttack));
-        mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
-    }
-    public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
-        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
-        mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
-        mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
-        mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
+    public void setStatusParameters(Actor player, Actor enemy) {
+        mainStage.setHealthValueLabel(String.valueOf(player.getHealth()));
+        mainStage.setLevelValueLabel(String.valueOf(player.getCurrentLevel()));
+        mainStage.setXPValueLabel(String.valueOf(player.getCurrentXP()));
+        mainStage.setAttackValueLabel(String.valueOf(player.getAttack()));
+        mainStage.setDefenceValueLabel(String.valueOf(player.getDefense()));
+        mainStage.setInventoryValueLabel(String.valueOf(player.getInventory()));
+        mainStage.setEnemyHealthValueLabel(String.valueOf(enemy.getHealth()));
     }
 }
