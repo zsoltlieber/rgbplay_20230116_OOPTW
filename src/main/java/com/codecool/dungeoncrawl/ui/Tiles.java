@@ -27,11 +27,11 @@ public class Tiles {
         tileMap.put("wall", new Tile(10, 17));
         tileMap.put("floor", new Tile(2, 0));
         tileMap.put("gate", new Tile(3, 3));
-        tileMap.put("player", new Tile(27, 0));
+        tileMap.put("player", new Tile(24, 4));
         //enemies
         tileMap.put("skeleton", new Tile(29, 6));
-        tileMap.put("zombie", new Tile(25, 9));
-        tileMap.put("wolf", new Tile(21, 9));
+        tileMap.put("zombie", new Tile(30, 6));
+        tileMap.put("wolf", new Tile(31, 7));
         //items
         tileMap.put("health potion", new Tile(26,22));
         tileMap.put("club", new Tile(2, 24));
