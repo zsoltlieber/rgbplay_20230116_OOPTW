@@ -41,6 +41,7 @@ public class UI {
         this.keyHandlers = keyHandlers;
     }
 
+
     public void setUpPain(Stage primaryStage) {
         this.primaryStage = primaryStage;
 
@@ -59,16 +60,14 @@ public class UI {
         refresh();
     }
 
-    public void mapChange(Cell cell){
+    public void mapChange(Cell cell) {
 
-        System.out.println(cell.getX());
-        System.out.println(cell.getY());
-
-        List <Gate> filteredGates = logic.getMap().getGates().stream()
+        List<Gate> filteredGates = logic.getMap().getGates().stream()
+        
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
 
-        if(filteredGates.size()> 0 ){
+        if (filteredGates.size() > 0) {
             Gate gate = filteredGates.get(0);
             Player player = logic.getMap().getPlayer();
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
@@ -114,26 +113,21 @@ public class UI {
                 }
             }
         }
-
-        /*for (int x = playerPosition.getX()-halfOfTheViewPortWidth; x <= playerPosition.getX()+halfOfTheViewPortWidth; x++) {
-            for (int y = playerPosition.getY()-halfOfTheViewPortHeight; y <= playerPosition.getY()+halfOfTheViewPortHeight; y++) {
-
-                Cell cell = new Cell(new GameMap(1,1,CellType.EMPTY),0,0, CellType.EMPTY);
-
-                if(!(x <0 || y< 0 || x>= logic.getMapWidth() || y>= logic.getMapHeight())){
-                    cell = logic.getCell(x, y);
-                }
-
-
-                if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(),targetX, targetY);
-                } else {
-                    Tiles.drawTile(context, cell, targetX, targetY);
-                }
-            }
-        }*/
-
+        
         mainStage.setHealthLabelText(logic.getPlayerHealth());
 
+    }
+
+    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
+        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setXPValueLabel(String.valueOf(playerXP));
+        mainStage.setAttackValueLabel(String.valueOf(playerAttack));
+        mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
+    }
+    public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
+        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
+        mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
+        mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
+        mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
     }
 }
