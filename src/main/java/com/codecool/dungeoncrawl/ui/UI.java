@@ -32,6 +32,7 @@ public class UI {
 
     private static int VIEWPORT_HEIGHT = 15;
     private static int VIEWPORT_WIDTH = 15;
+
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
                 VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
@@ -62,16 +63,16 @@ public class UI {
         refresh();
     }
 
-    public void mapChange(Cell cell){
+    public void mapChange(Cell cell) {
 
         System.out.println(cell.getX());
         System.out.println(cell.getY());
 
-        List <Gate> filteredGates = logic.getMap().getGates().stream()
+        List<Gate> filteredGates = logic.getMap().getGates().stream()
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
 
-        if(filteredGates.size()> 0 ){
+        if (filteredGates.size() > 0) {
             Gate gate = filteredGates.get(0);
             Player player = logic.getMap().getPlayer();
 
@@ -82,7 +83,7 @@ public class UI {
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
             refresh();
-        }else{
+        } else {
             System.out.println("no such gate found");
         }
 
@@ -90,27 +91,27 @@ public class UI {
 
     public void refresh() {
 
-        int halfOfTheViewPortWidth = VIEWPORT_WIDTH /2;
-        int halfOfTheViewPortHeight = VIEWPORT_HEIGHT /2;
+        int halfOfTheViewPortWidth = VIEWPORT_WIDTH / 2;
+        int halfOfTheViewPortHeight = VIEWPORT_HEIGHT / 2;
         Position playerPosition = logic.getMap().getPlayer().getCell().getPosition();
 
         context.setFill(Color.BLACK);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for(int targetX = 0; targetX < VIEWPORT_WIDTH;targetX++){
-            for(int targetY = 0; targetY < VIEWPORT_HEIGHT;targetY++){
+        for (int targetX = 0; targetX < VIEWPORT_WIDTH; targetX++) {
+            for (int targetY = 0; targetY < VIEWPORT_HEIGHT; targetY++) {
 
-                int sourceX = playerPosition.getX()-halfOfTheViewPortWidth + targetX;
-                int sourceY = playerPosition.getY()-halfOfTheViewPortHeight  +targetY;
+                int sourceX = playerPosition.getX() - halfOfTheViewPortWidth + targetX;
+                int sourceY = playerPosition.getY() - halfOfTheViewPortHeight + targetY;
 
-                Cell cell = new Cell(new GameMap(1,1, CellType.EMPTY),0,0, CellType.EMPTY);
+                Cell cell = new Cell(new GameMap(1, 1, CellType.EMPTY), 0, 0, CellType.EMPTY);
 
-                if(!(sourceX <0 || sourceY< 0 || sourceX>= logic.getMapWidth() || sourceY>= logic.getMapHeight())){
+                if (!(sourceX < 0 || sourceY < 0 || sourceX >= logic.getMapWidth() || sourceY >= logic.getMapHeight())) {
                     cell = logic.getCell(sourceX, sourceY);
                 }
 
                 if (cell.getActor() != null) {
-                    Tiles.drawTile(context, cell.getActor(),targetX, targetY);
+                    Tiles.drawTile(context, cell.getActor(), targetX, targetY);
                 } else {
                     Tiles.drawTile(context, cell, targetX, targetY);
                 }
@@ -119,12 +120,17 @@ public class UI {
     }
 
     public void setStatusParameters(Actor player, Actor enemy) {
+        int enemyActualHealth = enemy.getHealth();
         mainStage.setHealthValueLabel(String.valueOf(player.getHealth()));
         mainStage.setLevelValueLabel(String.valueOf(player.getCurrentLevel()));
         mainStage.setXPValueLabel(String.valueOf(player.getCurrentXP()));
         mainStage.setAttackValueLabel(String.valueOf(player.getAttack()));
         mainStage.setDefenceValueLabel(String.valueOf(player.getDefense()));
         mainStage.setInventoryValueLabel(String.valueOf(player.getInventory()));
+        if (enemyActualHealth < 0) {
+        mainStage.setEnemyHealthValueLabel(String.valueOf(0));
+        }else {
         mainStage.setEnemyHealthValueLabel(String.valueOf(enemy.getHealth()));
+        }
     }
 }
