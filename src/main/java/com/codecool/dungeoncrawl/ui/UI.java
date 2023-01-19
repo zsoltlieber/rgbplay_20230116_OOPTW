@@ -71,8 +71,10 @@ public class UI {
         if(filteredGates.size()> 0 ){
             Gate gate = filteredGates.get(0);
             Player player = logic.getMap().getPlayer();
+
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
             player.setCell(logic.getMap().getCell(gate.getTargetPosition().getX(), gate.getTargetPosition().getY()));
+            player.getCell().setType(CellType.PLAYER);
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
             refresh();

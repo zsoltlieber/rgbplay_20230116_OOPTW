@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.data;
 
+import com.codecool.dungeoncrawl.data.actors.Enemy;
 import com.codecool.dungeoncrawl.data.actors.Player;
 
 import java.util.ArrayList;
@@ -9,8 +10,8 @@ public class GameMap {
     private int width;
     private int height;
     private Cell[][] cells;
-
     private List<Gate> gates = new ArrayList<>();
+    private List<Enemy> enemies = new ArrayList<>();
 
     private Player player;
 
@@ -53,4 +54,11 @@ public class GameMap {
         return gates;
     }
 
+    public void addToEnemies(Enemy enemy){
+        enemies.add(enemy);
+    }
+
+    public List<Enemy> getEnemies() {
+        return enemies;
+    }
 }
