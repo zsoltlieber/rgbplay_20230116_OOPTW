@@ -30,7 +30,7 @@ public class Game extends Application {
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(() -> {
             ui.refresh();
-        },0, 30, TimeUnit.MILLISECONDS);
+        },0, 50, TimeUnit.MILLISECONDS);
         // 60 FPS - 16.6 MS
         //
 
