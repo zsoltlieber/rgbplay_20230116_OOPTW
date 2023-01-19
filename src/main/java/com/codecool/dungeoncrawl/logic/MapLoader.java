@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class MapLoader {
 
-    static String[] mapFiles = new String[]{"/map0.txt","/map1.txt"};
+    static String[] mapFiles = new String[]{"/map0.txt","/map1.txt","/map2.txt"};
 
     public static List<GameMap> loadAllMaps(){
         List<GameMap> output = new ArrayList<>();
