@@ -37,7 +37,7 @@ public class UI {
         this.keyHandlers = keyHandlers;
     }
 
-    public void refreshContext(){
+    public void refreshContext() {
 
         this.canvas = new Canvas(
                 logic.getMapWidth() * Tiles.TILE_WIDTH,
@@ -71,13 +71,13 @@ public class UI {
         refresh();
     }
 
-    public void mapChange(Cell cell){
+    public void mapChange(Cell cell) {
 
-        List <Gate> filteredGates = logic.getMap().getGates().stream()
+        List<Gate> filteredGates = logic.getMap().getGates().stream()
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
 
-        if(filteredGates.size()> 0 ){
+        if (filteredGates.size() > 0) {
             Gate gate = filteredGates.get(0);
             Player player = logic.getMap().getPlayer();
             logic.setMap(logic.getAllMaps().get(gate.getMapNumber()));
@@ -101,6 +101,19 @@ public class UI {
                 }
             }
         }
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
+        // mainStage.setHealthLabelText(logic.getPlayerHealth());
+    }
+
+    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
+        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setXPValueLabel(String.valueOf(playerXP));
+        mainStage.setAttackValueLabel(String.valueOf(playerAttack));
+        mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
+    }
+    public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
+        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
+        mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
+        mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
+        mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
     }
 }

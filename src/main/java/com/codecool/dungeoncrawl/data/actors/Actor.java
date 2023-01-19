@@ -13,7 +13,7 @@ public abstract class Actor implements Drawable {
     protected String name;
     protected int health = 30;
     protected int attack = 10;
-    protected int defense;
+    protected int defense =0;
     protected Cell cell;
 
     public Actor(Cell cell) {
@@ -40,6 +40,8 @@ public abstract class Actor implements Drawable {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
             if(currentCellType == CellType.PLAYER) {
+                ui.setPlayerParameters(this.health, this.xpValue, this.attack, this.defense);
+                ui.setEnemyParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
                 if(nextCellActor.isDead()) {
                     this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
                     System.out.println("XP gained: " + nextCellActor.getXpValue());
@@ -47,6 +49,8 @@ public abstract class Actor implements Drawable {
                     nextCell.setType(CellType.FLOOR);
                 }
             } else if (currentCellType == CellType.ENEMY) {
+            ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
+            ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);
                 if(nextCellActor.isDead()) {
                     System.out.println("IMPLEMENT GAME OVER");
                 }
