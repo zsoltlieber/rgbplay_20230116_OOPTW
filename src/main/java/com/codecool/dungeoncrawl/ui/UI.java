@@ -116,8 +116,6 @@ public class UI {
             }
         }
 
-        mainStage.setHealthLabelText(logic.getPlayerHealth());
-
     }
 
     public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
