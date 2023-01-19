@@ -88,7 +88,7 @@ public abstract class Actor implements Drawable {
         } else if(nextCell.getType() == CellType.SPECIAL_SKULL && currentCellType == CellType.PLAYER){
             spawnEnemiesForSkull(nextCell);
         }else if(nextCell.getType() == CellType.FIRE && currentCellType == CellType.PLAYER){
-            health -= 5;
+            damageActor(5);
         }else{
             System.out.println("Not implemented yet!");
         }
