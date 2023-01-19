@@ -9,6 +9,11 @@ public enum CellType {
     GATE("gate"),
     FLOOR("floor"),
     WALL("wall"),
+    SPECIAL_SKULL("special-skull"),
+    FIRE("fire"),
+    LOCKED_DOOR("locked-door"),
+    OPEN_DOOR("open-door"),
+    //decoration
     PILLAR("pillar"),
     ALTAR0("altar0"),
     ALTAR1("altar1"),
@@ -19,10 +24,10 @@ public enum CellType {
     ALTAR6("altar6"),
     ALTAR7("altar7"),
     ALTAR8("altar8"),
-    SPECIAL_SKULL("special-skull"),
     FENCE("fence"),
     WATER("water"),
     CANAL("canal"),
+    SKULL("skull"),
     TORCH("torch");
 
     private final String tileName;

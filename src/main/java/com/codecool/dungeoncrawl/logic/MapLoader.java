@@ -19,7 +19,10 @@ public class MapLoader {
             "map0.txt",
             "map1.txt",
             "map2.txt",
-            "map3.txt"
+            "map3.txt",
+            "map4.txt",
+            "map5.txt",
+            "map6.txt"
             };
 
     public static List<GameMap> loadAllMaps(){
@@ -128,6 +131,18 @@ public class MapLoader {
                             break;
                         case 'c':
                             cell.setType(CellType.CANAL);
+                            break;
+                        case 'h':
+                            cell.setType(CellType.SKULL);
+                            break;
+                        case 'F':
+                            cell.setType(CellType.FIRE);
+                            break;
+                        case 'L':
+                            cell.setType(CellType.LOCKED_DOOR);
+                            break;
+                        case 'O':
+                            cell.setType(CellType.OPEN_DOOR);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + currentChar + "'");

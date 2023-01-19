@@ -28,6 +28,9 @@ public abstract class Actor implements Drawable {
     List<CellType> walkable =List.of(
             CellType.FLOOR,
             CellType.EMPTY,
+            CellType.CANAL,
+            CellType.OPEN_DOOR,
+            CellType.SKULL,
             CellType.ALTAR0,
             CellType.ALTAR1,
             CellType.ALTAR2,
@@ -104,7 +107,9 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             nextCell.setType(CellType.PLAYER);
             cell = nextCell;
-        } else {
+        } else if(nextCell.getType() == CellType.FIRE && currentCellType == CellType.PLAYER){
+            damageActor(5);
+        }else{
             System.out.println("Not implemented yet!");
         }
     }
