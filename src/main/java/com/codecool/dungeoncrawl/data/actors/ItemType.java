@@ -7,7 +7,8 @@ public enum ItemType {
     SWORD("sword", 0, 30, 0, 0, 'S'),
     AXE("axe", 0, 40, 0, 0, 'A'),
     SHIELD("shield", 0, 0, 10, 0, 'D'),
-    XP_RING("xp ring", 0, 0, 0, 10, 'X');
+    XP_RING("xp ring", 0, 0, 0, 10, 'X'),
+    KEY("key", 0, 0, 0, 0, ':');
 
     private final String name;
     private final int health;

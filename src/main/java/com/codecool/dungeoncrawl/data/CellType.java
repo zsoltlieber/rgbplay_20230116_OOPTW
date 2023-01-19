@@ -5,6 +5,7 @@ public enum CellType {
     PLAYER("player"),
     ITEM("item"),
     ENEMY("enemy"),
+    CORPSE("corpse"),
     GATE("gate"),
     FLOOR("floor"),
     WALL("wall"),

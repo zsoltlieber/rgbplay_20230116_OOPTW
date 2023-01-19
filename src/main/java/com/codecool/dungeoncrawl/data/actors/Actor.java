@@ -6,9 +6,11 @@ import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.ui.UI;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Actor implements Drawable {
+    List<String> inventory = new LinkedList<>();
     protected int currentXP = 0;
     protected int currentLevel = 1;
     protected int xpValue;
@@ -62,30 +64,46 @@ public abstract class Actor implements Drawable {
         } else if (nextCell.getType() == CellType.ENEMY) {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
-            if(currentCellType == CellType.PLAYER) {
-                ui.setPlayerParameters(this.health, this.xpValue, this.attack, this.defense);
-                ui.setEnemyParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
-                if(nextCellActor.isDead()) {
-                    this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
-                    System.out.println("XP gained: " + nextCellActor.getXpValue());
-                    nextCell.setActor(null);
-                    nextCell.setType(CellType.FLOOR);
-                }
 
-            } /*else if (currentCellType == CellType.ENEMY) {
-            ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
-            ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);
-                if(nextCellActor.isDead()) {
-                    System.out.println("IMPLEMENT GAME OVER");
-                }
-            }*/
+            if(nextCellActor.isDead()) {
+                this.gainXP(nextCellActor.getXpValue()); // give xp to player if they kill a monster
+                System.out.println("XP gained: " + nextCellActor.getXpValue());
+
+                nextCell.setActor(null);
+                nextCell.setType(CellType.FLOOR);
+            }
+            //set the HUD after it is decided if the enemy is dead
+            ui.setPlayerParameters(this.health, this.inventory, this.xpValue, this.attack, this.defense);
+            ui.setEnemyParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
             nextCell.setActor(nextCellActor);
         } else if (nextCell.getType() == CellType.GATE) {
             ui.mapChange(nextCell);
+        } else if (nextCell.getType() == CellType.LOCKED_DOOR && inventory.contains("key")) {
+            inventory.remove("key");
+            cell.setActor(null);
+            cell.setType(previousStepType);
+            this.previousStepType = CellType.OPEN_DOOR;
+            nextCell.setActor(this);
+            nextCell.setType(CellType.PLAYER);
+            cell = nextCell;
         } else if (nextCell.getType() == CellType.SPECIAL_SKULL){
             spawnEnemiesForSkull(nextCell);
         } else if (nextCell.getType() == CellType.ITEM) {
+            Actor nextCellActor = nextCell.getActor();
+            if(nextCellActor.getName().equals("key")) {
+                inventory.add(nextCellActor.getName());
+            }
+            this.healActor(nextCellActor.getHealth());
+            this.increaseDefense(nextCellActor.getDefense());
+            this.gainXP(nextCellActor.getXpValue());
+            this.increaseAttack(nextCellActor.getAttack());
+            ui.setPlayerParameters(this.health, this.inventory, this.xpValue, this.attack, this.defense);
 
+            cell.setActor(null);
+            cell.setType(CellType.FLOOR);
+            nextCell.setActor(this);
+            nextCell.setType(CellType.PLAYER);
+            cell = nextCell;
         } else {
             System.out.println("Not implemented yet!");
         }
@@ -134,15 +152,17 @@ public abstract class Actor implements Drawable {
     public int getHealth() {
         return health;
     }
+    public void healActor(int heal) {this.health += heal;}
     public boolean isDead() {
         return health <= 0;
     }
     public int getAttack() {return attack;}
+    public void increaseAttack(int attack) {this.attack += attack;}
     public int getDefense() {return defense;}
+    public void increaseDefense(int defense) {this.defense += defense;}
     public Cell getCell() {
         return cell;
     }
-
     public int getX() {
         return cell.getX();
     }

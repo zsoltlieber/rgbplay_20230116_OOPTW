@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.EnemyType;
+import com.codecool.dungeoncrawl.data.actors.Item;
 import com.codecool.dungeoncrawl.data.actors.Position;
 
 import java.util.HashMap;

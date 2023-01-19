@@ -39,7 +39,9 @@ public class Tiles {
         tileMap.put("axe", new Tile(10, 30));
         tileMap.put("shield", new Tile(5, 25));
         tileMap.put("xp ring", new Tile(13, 28));
+        tileMap.put("key", new Tile(16, 23));
         //decorations
+        tileMap.put("corpse", new Tile(0,15));
         tileMap.put("pillar",new Tile(3,13));
         tileMap.put("altar0",new Tile(0,16));
         tileMap.put("altar1",new Tile(1,16));

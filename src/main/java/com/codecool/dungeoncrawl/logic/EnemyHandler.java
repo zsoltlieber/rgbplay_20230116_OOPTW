@@ -32,7 +32,7 @@ public class EnemyHandler {
     public void start() {
         for(EnemyType enemyType : EnemyType.values()) {
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis( enemyType.getFrequency() ), ev -> {
-                System.out.println("executed " + enemyType.getName() + " movement");
+                //System.out.println("executed " + enemyType.getName() + " movement");
                 moveEnemies(map, enemyType);
                 ui.refresh();
             }));

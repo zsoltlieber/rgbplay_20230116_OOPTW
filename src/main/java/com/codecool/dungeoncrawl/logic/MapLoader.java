@@ -73,6 +73,7 @@ public class MapLoader {
                         case 'A':
                         case 'D':
                         case 'X':
+                        case ':':
                             cell.setType(CellType.ITEM);
                             new Item(cell, Item.getItemType(currentChar));
                             break;

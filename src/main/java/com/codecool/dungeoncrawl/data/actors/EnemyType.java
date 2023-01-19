@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 public enum EnemyType {
-    SKELETON("skeleton", 10, 2, 3, 20, 's', -1, 1200),
-    ZOMBIE("zombie", 10, 2, 3, 30, 'z', 3, 900),
-    WOLF("wolf", 10, 2, 3, 5, 'w', 5, 600);
+    SKELETON("skeleton", 300, 1, 3, 20, 's', -1, 1200),
+    ZOMBIE("zombie", 100, 5, 3, 30, 'z', 3, 900),
+    WOLF("wolf", 50, 3, 3, 20, 'w', 5, 600);
 
     private final String name;
     private final int health;

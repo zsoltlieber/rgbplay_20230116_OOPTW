@@ -117,8 +117,9 @@ public class UI {
 
     }
 
-    public void setPlayerParameters(int playerHealth, int playerXP, int playerAttack, int playerDefence) {
+    public void setPlayerParameters(int playerHealth, List<String> inventory, int playerXP, int playerAttack, int playerDefence) {
         mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setInventoryValueLabel(inventory.toString());
         mainStage.setXPValueLabel(String.valueOf(playerXP));
         mainStage.setAttackValueLabel(String.valueOf(playerAttack));
         mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
