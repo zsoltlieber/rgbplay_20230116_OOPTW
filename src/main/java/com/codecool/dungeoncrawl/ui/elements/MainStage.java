@@ -43,4 +43,6 @@ public class MainStage {
     public void setEnemyAttackValueLabel(String text) {    this.statusPane.setEnemyAttackValueLabel(text);    }
     public void setEnemyDefenceValueLabel(String text) {     this.statusPane.setEnemyDefenceValueLabel(text);   }
 
+    public void setHealthLabelText(String playerHealth) {
+    }
 }

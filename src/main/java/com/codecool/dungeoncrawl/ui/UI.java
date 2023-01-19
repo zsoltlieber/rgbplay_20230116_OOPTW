@@ -28,7 +28,6 @@ public class UI {
     private GameLogic logic;
     private Stage primaryStage;
     private Set<KeyHandler> keyHandlers;
-
     private static int VIEWPORT_HEIGHT = 15;
     private static int VIEWPORT_WIDTH = 15;
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
@@ -41,7 +40,6 @@ public class UI {
         this.mainStage = new MainStage(canvas);
         this.keyHandlers = keyHandlers;
     }
-
 
     public void setUpPain(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -58,13 +56,13 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-        //refresh();
+        refresh();
     }
 
     public void mapChange(Cell cell) {
 
         List<Gate> filteredGates = logic.getMap().getGates().stream()
-        
+
                 .filter(gate -> gate.getGatePosition().equals(cell.getPosition()))
                 .collect(Collectors.toList());
 
@@ -76,8 +74,6 @@ public class UI {
 
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
-
-            refresh();
         }else{
             System.out.println("no such gate found");
         }
@@ -114,7 +110,7 @@ public class UI {
                 }
             }
         }
-        
+
         mainStage.setHealthLabelText(logic.getPlayerHealth());
 
     }

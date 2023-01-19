@@ -50,6 +50,7 @@ public abstract class Actor implements Drawable {
                     nextCell.setActor(null);
                     nextCell.setType(CellType.FLOOR);
                 }
+
             } else if (currentCellType == CellType.ENEMY) {
             ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
             ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);

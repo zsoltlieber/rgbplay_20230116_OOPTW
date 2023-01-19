@@ -6,6 +6,11 @@ import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.data.actors.Actor;
 import com.codecool.dungeoncrawl.data.actors.EnemyType;
 import com.codecool.dungeoncrawl.ui.UI;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,21 +29,24 @@ public class EnemyHandler {
     }
 
     public void start() {
-        int i = 0;
-        for(EnemyType enemyType : EnemyType.values()) {
-            executor.scheduleAtFixedRate(() -> {
-                    moveEnemies(map, enemyType.getName());
-                    /*try {
-                        ui.refresh();
-                    } catch(Exception e) {
-                        System.out.println("Error when trying to refresh in enemy handler.");
-                    }*/
-            }, 0, enemyType.getFrequency(), TimeUnit.MILLISECONDS);
-            i++;
-        }
+        System.out.println("START ENEMY HANDLER");
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), ev -> {
+            System.out.println("executed monster movement");
+            moveEnemies(map);
+            ui.refresh();
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
-    private void moveEnemies(GameMap map, String enemyName) {
+        /*for(EnemyType enemyType : EnemyType.values()) {
+            System.out.println(enemyType.getName().toUpperCase());
+            executor.scheduleAtFixedRate(() -> {
+                    moveEnemies(map, enemyType);
+            }, 0, enemyType.getFrequency(), TimeUnit.SECONDS);
+        }*/
+
+    private void moveEnemies(GameMap map) {
         int width = map.getWidth();
         int height = map.getHeight();
         Random random = new Random();
@@ -47,10 +55,13 @@ public class EnemyHandler {
             for(int j = 0; j < height; j++ ) {
                 try {
                     Cell currentCell = map.getCell(i, j);
-                    Actor currentCellActor;
-                    if((currentCellActor = currentCell.getActor()) != null) {
-                        if (currentCell.getType() == CellType.ENEMY && currentCellActor.getName().equals(enemyName)) {
-                            System.out.println(currentCellActor.getName());
+                    Actor currentCellActor = currentCell.getActor();
+                    if(currentCellActor != null && currentCell.getType() == CellType.ENEMY) {
+                        //if (currentCell.getType() == CellType.ENEMY && currentCellActor.getName().equals(enemyType.getName())) {
+
+                            if(currentCellActor.getName().equals(EnemyType.WOLF.getName()))
+                                System.out.println(currentCellActor.getName());
+
                             switch(random.nextInt(4)) {
                                 case 0:
                                     currentCellActor.move(1, 0);
@@ -65,7 +76,7 @@ public class EnemyHandler {
                                     currentCellActor.move(0, -1);
                                     break;
                             }
-                        }
+                        //}
                     }
                 } catch (ArrayIndexOutOfBoundsException e) {
                     e.printStackTrace();
