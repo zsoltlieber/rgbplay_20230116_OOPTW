@@ -110,7 +110,6 @@ public abstract class Actor implements Drawable {
         } else if(nextCell.getType() == CellType.FIRE && currentCellType == CellType.PLAYER){
             damageActor(5);
         }else{
-            System.out.println("Not implemented yet!");
         }
     }
 
@@ -147,9 +146,6 @@ public abstract class Actor implements Drawable {
         } else if (nextCell.getType() == CellType.PLAYER) {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
-                if(nextCellActor.isDead()) {
-                    System.out.println("IMPLEMENT GAME OVER");
-                }
             nextCell.setActor(nextCellActor);
         }
     }
@@ -205,7 +201,7 @@ public abstract class Actor implements Drawable {
         }
     }
     public void damageActor(int damageNumber) {
-        this.health -= damageNumber - this.defense;
+        this.health -= Math.max(damageNumber - this.defense,1);
     }
     public boolean didntMoveThisRound() {
         return didntMoveThisRound;
