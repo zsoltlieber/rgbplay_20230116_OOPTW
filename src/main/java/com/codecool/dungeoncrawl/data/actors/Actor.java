@@ -158,6 +158,9 @@ public abstract class Actor implements Drawable {
         return health;
     }
     public void healActor(int heal) {this.health += heal;}
+    public void setHealth(int health) {
+        this.health = health;
+    }
     public boolean isDead() {
         return health <= 0;
     }
@@ -178,6 +181,11 @@ public abstract class Actor implements Drawable {
     public int getCurrentXP() {return this.currentXP;}
     public int getCurrentLevel() {return this.currentLevel;}
     public String getName() {return this.name;}
+
+    public List<String> getInventory() {
+        return inventory;
+    }
+
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;

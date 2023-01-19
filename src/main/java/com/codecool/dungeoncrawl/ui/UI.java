@@ -16,6 +16,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.lang.management.OperatingSystemMXBean;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,8 +29,8 @@ public class UI {
     private GameLogic logic;
     private Stage primaryStage;
     private Set<KeyHandler> keyHandlers;
-    private static int VIEWPORT_HEIGHT = 15;
-    private static int VIEWPORT_WIDTH = 15;
+    private static int VIEWPORT_HEIGHT = 20;
+    private static int VIEWPORT_WIDTH = 20;
     public UI(GameLogic logic, Set<KeyHandler> keyHandlers) {
         this.canvas = new Canvas(
                 VIEWPORT_WIDTH * Tiles.TILE_WIDTH,
@@ -49,7 +50,7 @@ public class UI {
         primaryStage.setScene(scene);
 
         logic.setup();
-        //refresh();
+        refresh();
         scene.setOnKeyPressed(this::onKeyPressed);
     }
 
@@ -57,7 +58,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-       // refresh();
+       refresh();
     }
 
     public void mapChange(Cell cell) {
@@ -79,7 +80,7 @@ public class UI {
             player.getCell().setType(CellType.PLAYER);
             logic.getMap().setPlayer(player);
             logic.getMap().getCell(player.getX(), player.getY()).setActor(player);
-            //refresh();
+            refresh();
         }else{
             System.out.println("no such gate found");
         }
@@ -115,6 +116,15 @@ public class UI {
             }
         }
 
+        Player player = logic.getMap().getPlayer();
+        setPlayerParameters(
+                player.getHealth(), player.getInventory(), player.getCurrentXP(), player.getAttack(), player.getDefense()
+        );
+
+        if(player.isDead()) {
+            player.setHealth(1);
+            logic.setMap(logic.getAllMaps().get(7));
+        }
     }
 
     public void setPlayerParameters(int playerHealth, List<String> inventory, int playerXP, int playerAttack, int playerDefence) {
