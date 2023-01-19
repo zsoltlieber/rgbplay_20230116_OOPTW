@@ -3,8 +3,13 @@ package com.codecool.dungeoncrawl.data.actors;
 import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
+import com.codecool.dungeoncrawl.data.GameMap;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.UI;
+
+import java.util.concurrent.ThreadPoolExecutor;
+
+import java.util.List;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -18,6 +23,22 @@ public abstract class Actor implements Drawable {
     protected int defense =0;
     protected Cell cell;
 
+    protected CellType previousStepType = CellType.ALTAR4;
+
+    List<CellType> walkable =List.of(
+            CellType.FLOOR,
+            CellType.EMPTY,
+            CellType.ALTAR0,
+            CellType.ALTAR1,
+            CellType.ALTAR2,
+            CellType.ALTAR3,
+            CellType.ALTAR4,
+            CellType.ALTAR5,
+            CellType.ALTAR6,
+            CellType.ALTAR7,
+            CellType.ALTAR8
+        );
+
     public Actor(Cell cell) {
         this.cell = cell;
         this.cell.setActor(this);
@@ -30,9 +51,11 @@ public abstract class Actor implements Drawable {
     public void move(int dx, int dy, UI ui) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         CellType currentCellType = cell.getType();
-        if(nextCell.getType() == CellType.FLOOR || nextCell.getType() == CellType.EMPTY) {
+
+        if(walkable.contains(nextCell.getType())) {
             cell.setActor(null);
-            cell.setType(CellType.FLOOR);
+            cell.setType(previousStepType);
+            this.previousStepType = nextCell.getType();
             nextCell.setActor(this);
             nextCell.setType(currentCellType == CellType.ENEMY ? CellType.ENEMY : CellType.PLAYER);
             cell = nextCell;
@@ -60,9 +83,31 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(nextCellActor);
         } else if (nextCell.getType() == CellType.GATE && currentCellType == CellType.PLAYER) {
             ui.mapChange(nextCell);
-        } else {
+        } else if(nextCell.getType() == CellType.SPECIAL_SKULL && currentCellType == CellType.PLAYER){
+            spawnEnemiesForSkull(nextCell);
+        }else{
             System.out.println("Not implemented yet!");
         }
+    }
+
+    public void spawnActor(Cell cell, Actor actor){
+        cell.setActor(actor);
+        cell.setType(CellType.ENEMY);
+    }
+
+    public void spawnEnemiesForSkull(Cell skullCell){
+        GameMap map = skullCell.getGameMap();
+        List<Cell> targetCells = List.of(
+                map.getCell(5,9),
+                map.getCell(5,10),
+                map.getCell(19,9),
+                map.getCell(19,10)
+        );
+
+        for(Cell cell : targetCells){
+           spawnActor(cell,new Enemy(cell,EnemyType.ZOMBIE));
+        }
+
     }
 
     public void move(int dx, int dy) {
