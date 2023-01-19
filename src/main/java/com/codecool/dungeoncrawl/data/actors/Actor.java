@@ -6,6 +6,8 @@ import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.UI;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 public abstract class Actor implements Drawable {
     protected int currentXP = 0;
     protected int currentLevel = 1;
@@ -63,11 +65,33 @@ public abstract class Actor implements Drawable {
         }
     }
 
+    public void move(int dx, int dy) {
+        Cell nextCell = cell.getNeighbor(dx, dy);
+        CellType currentCellType = cell.getType();
+        if(nextCell.getType() == CellType.FLOOR || nextCell.getType() == CellType.EMPTY) {
+            cell.setActor(null);
+            cell.setType(CellType.FLOOR);
+            nextCell.setActor(this);
+            nextCell.setType(currentCellType == CellType.ENEMY ? CellType.ENEMY : CellType.PLAYER);
+            cell = nextCell;
+        } else if (nextCell.getType() == CellType.WALL || nextCell.getType() == CellType.GATE || nextCell.getType() == CellType.ITEM) {
+        } else if (nextCell.getType() == CellType.PLAYER) {
+            Actor nextCellActor = nextCell.getActor();
+            nextCellActor.damageActor(this.attack);
+                if(nextCellActor.isDead()) {
+                    System.out.println("IMPLEMENT GAME OVER");
+                }
+            nextCell.setActor(nextCellActor);
+        } else {
+            System.out.println("Not implemented yet!");
+        }
+    }
+
     public int getHealth() {
         return health;
     }
     public boolean isDead() {
-        return (health <= 0) ? true : false;
+        return health <= 0;
     }
     public int getAttack() {return attack;}
     public int getDefense() {return defense;}
@@ -85,6 +109,7 @@ public abstract class Actor implements Drawable {
     public int getXpValue() {return this.xpValue;}
     public int getCurrentXP() {return this.currentXP;}
     public int getCurrentLevel() {return this.currentLevel;}
+    public String getName() {return this.name;}
     public void gainXP(int xp) {
         int maxLevel = 15;
         if (currentLevel >= maxLevel) return;
