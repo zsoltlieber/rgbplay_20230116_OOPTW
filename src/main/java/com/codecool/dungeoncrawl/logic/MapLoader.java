@@ -21,7 +21,8 @@ public class MapLoader {
             "map2.txt",
             "map3.txt",
             "map4.txt",
-            "map5.txt"
+            "map5.txt",
+            "map6.txt"
             };
 
     public static List<GameMap> loadAllMaps(){
@@ -133,8 +134,8 @@ public class MapLoader {
                         case 'h':
                             cell.setType(CellType.SKULL);
                             break;
-                        case 'm':
-                            cell.setType(CellType.MINE);
+                        case 'F':
+                            cell.setType(CellType.FIRE);
                             break;
                         default:
                             throw new RuntimeException("Unrecognized character: '" + currentChar + "'");

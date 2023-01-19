@@ -9,7 +9,7 @@ public enum CellType {
     FLOOR("floor"),
     WALL("wall"),
     SPECIAL_SKULL("special-skull"),
-    MINE("mine"),
+    FIRE("fire"),
     //decoration
     PILLAR("pillar"),
     ALTAR0("altar0"),
