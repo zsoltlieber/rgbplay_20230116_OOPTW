@@ -4,14 +4,9 @@ import com.codecool.dungeoncrawl.data.Cell;
 import com.codecool.dungeoncrawl.data.CellType;
 import com.codecool.dungeoncrawl.data.Drawable;
 import com.codecool.dungeoncrawl.data.GameMap;
-import com.codecool.dungeoncrawl.logic.GameLogic;
 import com.codecool.dungeoncrawl.ui.UI;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 import java.util.List;
-
-import java.util.concurrent.ThreadPoolExecutor;
 
 public abstract class Actor implements Drawable {
     protected int currentXP = 0;
@@ -22,6 +17,9 @@ public abstract class Actor implements Drawable {
     protected int attack = 10;
     protected int defense =0;
     protected Cell cell;
+    protected boolean didntMoveThisRound = false;
+    protected boolean movedOnX = false;
+    protected boolean noticedPlayer = false;
 
     protected CellType previousStepType = CellType.ALTAR4;
 
@@ -57,11 +55,11 @@ public abstract class Actor implements Drawable {
             cell.setType(previousStepType);
             this.previousStepType = nextCell.getType();
             nextCell.setActor(this);
-            nextCell.setType(currentCellType == CellType.ENEMY ? CellType.ENEMY : CellType.PLAYER);
+            nextCell.setType(CellType.PLAYER);
             cell = nextCell;
         } else if (nextCell.getType() == CellType.WALL) {
             System.out.println("You hit a wall!");
-        } else if (nextCell.getType() == CellType.ENEMY || nextCell.getType() == CellType.PLAYER) {
+        } else if (nextCell.getType() == CellType.ENEMY) {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
             if(currentCellType == CellType.PLAYER) {
@@ -74,26 +72,29 @@ public abstract class Actor implements Drawable {
                     nextCell.setType(CellType.FLOOR);
                 }
 
-            } else if (currentCellType == CellType.ENEMY) {
+            } /*else if (currentCellType == CellType.ENEMY) {
             ui.setPlayerParameters(nextCellActor.health, nextCellActor.xpValue, nextCellActor.attack, nextCellActor.defense);
             ui.setEnemyParameters(this.health, this.xpValue, this.attack, this.defense);
                 if(nextCellActor.isDead()) {
                     System.out.println("IMPLEMENT GAME OVER");
                 }
-            }
+            }*/
             nextCell.setActor(nextCellActor);
-        } else if (nextCell.getType() == CellType.GATE && currentCellType == CellType.PLAYER) {
+        } else if (nextCell.getType() == CellType.GATE) {
             ui.mapChange(nextCell);
-        } else if(nextCell.getType() == CellType.SPECIAL_SKULL && currentCellType == CellType.PLAYER){
+        } else if (nextCell.getType() == CellType.SPECIAL_SKULL){
             spawnEnemiesForSkull(nextCell);
-        }else{
+        } else if (nextCell.getType() == CellType.ITEM) {
+
+        } else {
             System.out.println("Not implemented yet!");
         }
     }
 
-    public void spawnActor(Cell cell, Actor actor){
-        cell.setActor(actor);
+    public void spawnEnemy(Cell cell, Enemy enemy){
+        cell.setActor(enemy);
         cell.setType(CellType.ENEMY);
+        cell.getGameMap().addToEnemies(enemy);
     }
 
     public void spawnEnemiesForSkull(Cell skullCell){
@@ -106,12 +107,12 @@ public abstract class Actor implements Drawable {
         );
 
         for(Cell cell : targetCells){
-           spawnActor(cell,new Enemy(cell,EnemyType.ZOMBIE));
+           spawnEnemy(cell,new Enemy(cell,EnemyType.ZOMBIE));
         }
 
     }
 
-    public void move(int dx, int dy) {
+    public void moveEnemy(int dx, int dy) {
         Cell nextCell = cell.getNeighbor(dx, dy);
         CellType currentCellType = cell.getType();
         if(nextCell.getType() == CellType.FLOOR || nextCell.getType() == CellType.EMPTY) {
@@ -120,7 +121,6 @@ public abstract class Actor implements Drawable {
             nextCell.setActor(this);
             nextCell.setType(currentCellType == CellType.ENEMY ? CellType.ENEMY : CellType.PLAYER);
             cell = nextCell;
-        } else if (nextCell.getType() == CellType.WALL || nextCell.getType() == CellType.GATE || nextCell.getType() == CellType.ITEM) {
         } else if (nextCell.getType() == CellType.PLAYER) {
             Actor nextCellActor = nextCell.getActor();
             nextCellActor.damageActor(this.attack);
@@ -128,8 +128,6 @@ public abstract class Actor implements Drawable {
                     System.out.println("IMPLEMENT GAME OVER");
                 }
             nextCell.setActor(nextCellActor);
-        } else {
-            System.out.println("Not implemented yet!");
         }
     }
 
@@ -148,7 +146,6 @@ public abstract class Actor implements Drawable {
     public int getX() {
         return cell.getX();
     }
-
     public int getY() {
         return cell.getY();
     }
@@ -176,5 +173,23 @@ public abstract class Actor implements Drawable {
     }
     public void damageActor(int damageNumber) {
         this.health -= damageNumber - this.defense;
+    }
+    public boolean didntMoveThisRound() {
+        return didntMoveThisRound;
+    }
+    public void setDidntMoveThisRound(boolean didntMoveThisRound) {
+        this.didntMoveThisRound = didntMoveThisRound;
+    }
+    public boolean movedOnX() {
+        return movedOnX;
+    }
+    public void setMovedOnX(boolean movedOnX) {
+        this.movedOnX = movedOnX;
+    }
+    public boolean noticedPlayer() {
+        return noticedPlayer;
+    }
+    public void setNoticedPlayer(boolean noticedPlayer) {
+        this.noticedPlayer = noticedPlayer;
     }
 }

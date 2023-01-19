@@ -57,7 +57,7 @@ public class UI {
         for (KeyHandler keyHandler : keyHandlers) {
             keyHandler.perform(keyEvent, logic, this);
         }
-        //refresh();
+        refresh();
     }
 
     public void mapChange(Cell cell) {

@@ -1,7 +1,10 @@
 package com.codecool.dungeoncrawl.data;
 
 import com.codecool.dungeoncrawl.data.actors.Actor;
+import com.codecool.dungeoncrawl.data.actors.EnemyType;
 import com.codecool.dungeoncrawl.data.actors.Position;
+
+import java.util.HashMap;
 
 public class Cell implements Drawable {
     private CellType type;
@@ -41,6 +44,16 @@ public class Cell implements Drawable {
 
     public Cell getNeighbor(int dx, int dy) {
         return gameMap.getCell(position.getX() + dx, position.getY() + dy);
+    }
+
+    public HashMap<String, Cell> getSurroundingCells() {
+        HashMap<String, Cell> surrounding = new HashMap<>();
+        surrounding.put("up", gameMap.getCell(position.getX(), position.getY() + -1));
+        surrounding.put("down", gameMap.getCell(position.getX(), position.getY() + 1));
+        surrounding.put("left", gameMap.getCell(position.getX() + -1, position.getY()));
+        surrounding.put("right", gameMap.getCell(position.getX() + 1, position.getY()));
+
+        return surrounding;
     }
 
     @Override

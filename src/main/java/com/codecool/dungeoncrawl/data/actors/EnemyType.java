@@ -1,9 +1,9 @@
 package com.codecool.dungeoncrawl.data.actors;
 
 public enum EnemyType {
-    SKELETON("skeleton", 10, 2, 3, 20, 's', 1),
-    ZOMBIE("zombie", 10, 2, 3, 30, 'z', 1),
-    WOLF("wolf", 10, 2, 3, 5, 'w', 1);
+    SKELETON("skeleton", 10, 2, 3, 20, 's', -1, 1200),
+    ZOMBIE("zombie", 10, 2, 3, 30, 'z', 3, 900),
+    WOLF("wolf", 10, 2, 3, 5, 'w', 5, 600);
 
     private final String name;
     private final int health;
@@ -11,15 +11,18 @@ public enum EnemyType {
     private final int defense;
     private final int xpValue;
     private final char symbol;
+
+    private final int detectionDistance;
     private final int frequency;
 
-    EnemyType(String name, int health, int attack, int defense, int xpValue, char symbol, int frequency) {
+    EnemyType(String name, int health, int attack, int defense, int xpValue, char symbol, int detectionDistance, int frequency) {
         this.name = name;
         this.health = health;
         this.attack = attack;
         this.defense = defense;
         this.xpValue = xpValue;
         this.symbol = symbol;
+        this.detectionDistance = detectionDistance;
         this.frequency = frequency;
     }
 
@@ -40,6 +43,9 @@ public enum EnemyType {
     }
     public char getSymbol() {
         return symbol;
+    }
+    public int getDetectionDistance() {
+        return detectionDistance;
     }
     public int getFrequency() {
         return frequency;
