@@ -115,7 +115,11 @@ public class UI {
 
         Player player = logic.getMap().getPlayer();
         setPlayerParameters(
-                player.getHealth(), player.getInventory(), player.getCurrentLevel(), player.getAttack(), player.getDefense()
+                player.getHealth(),
+                player.getInventory(),
+                player.getCurrentLevel(),
+                player.getAttack(),
+                player.getDefense()
         );
 
         if(player.isDead()) {
