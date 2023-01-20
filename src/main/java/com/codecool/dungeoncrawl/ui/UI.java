@@ -125,14 +125,14 @@ public class UI {
     }
 
     public void setPlayerParameters(int playerHealth, List<String> inventory, int playerLevel, int playerAttack, int playerDefence) {
-        mainStage.setHealthValueLabel(String.valueOf(playerHealth));
+        mainStage.setHealthValueLabel(String.valueOf(Math.max(0, playerHealth)));
         mainStage.setInventoryValueLabel(inventory.toString());
         mainStage.setLevelValueLabel(String.valueOf(playerLevel));
         mainStage.setAttackValueLabel(String.valueOf(playerAttack));
         mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
     }
     public void setEnemyParameters(int enemyHealth, int enemyXP, int enemyAttack, int enemyDefence) {
-        mainStage.setEnemyHealthValueLabel(String.valueOf(enemyHealth));
+        mainStage.setEnemyHealthValueLabel(String.valueOf(Math.max(0, enemyHealth)));
         mainStage.setEnemyXPValueLabel(String.valueOf(enemyXP));
         mainStage.setEnemyAttackValueLabel(String.valueOf(enemyAttack));
         mainStage.setEnemyDefenceValueLabel(String.valueOf(enemyDefence));
