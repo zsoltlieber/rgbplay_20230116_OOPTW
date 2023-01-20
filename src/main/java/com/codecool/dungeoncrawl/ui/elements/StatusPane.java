@@ -13,7 +13,7 @@ public class StatusPane {
     private Label healthValueLabel;
 
     private Label xPTextLabel;
-    private Label xPValueLabel;
+    private Label LevelValueLabel;
     private Label attackTextLabel;
     private Label attackValueLabel;
     private Label defenceTextLabel;
@@ -34,8 +34,8 @@ public class StatusPane {
         ui = new GridPane();
         healthTextLabel = new Label("Health: ");
         healthValueLabel = new Label();
-        xPTextLabel = new Label("Experience: ");
-        xPValueLabel = new Label();
+        xPTextLabel = new Label("Level: ");
+        LevelValueLabel = new Label();
         attackTextLabel = new Label("Attack: ");
         attackValueLabel = new Label();
         defenceTextLabel = new Label("Defence: ");
@@ -62,7 +62,7 @@ public class StatusPane {
         ui.add(healthTextLabel, 0, 0);
         ui.add(healthValueLabel, 1, 0);
         ui.add(xPTextLabel, 0, 2);
-        ui.add(xPValueLabel, 1, 2);
+        ui.add(LevelValueLabel, 1, 2);
         ui.add(attackTextLabel, 0, 4);
         ui.add(attackValueLabel, 1, 4);
         ui.add(defenceTextLabel, 0, 6);
@@ -88,8 +88,8 @@ public class StatusPane {
         healthValueLabel.setText(text);
     }
 
-    public void setXPValueLabel(String text) {
-        xPValueLabel.setText(text);
+    public void setLevelValueLabel(String text) {
+        LevelValueLabel.setText(text);
     }
 
     public void setAttackValueLabel(String text) {

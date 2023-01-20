@@ -115,7 +115,7 @@ public class UI {
 
         Player player = logic.getMap().getPlayer();
         setPlayerParameters(
-                player.getHealth(), player.getInventory(), player.getCurrentXP(), player.getAttack(), player.getDefense()
+                player.getHealth(), player.getInventory(), player.getCurrentLevel(), player.getAttack(), player.getDefense()
         );
 
         if(player.isDead()) {
@@ -124,10 +124,10 @@ public class UI {
         }
     }
 
-    public void setPlayerParameters(int playerHealth, List<String> inventory, int playerXP, int playerAttack, int playerDefence) {
+    public void setPlayerParameters(int playerHealth, List<String> inventory, int playerLevel, int playerAttack, int playerDefence) {
         mainStage.setHealthValueLabel(String.valueOf(playerHealth));
         mainStage.setInventoryValueLabel(inventory.toString());
-        mainStage.setXPValueLabel(String.valueOf(playerXP));
+        mainStage.setLevelValueLabel(String.valueOf(playerLevel));
         mainStage.setAttackValueLabel(String.valueOf(playerAttack));
         mainStage.setDefenceValueLabel(String.valueOf(playerDefence));
     }

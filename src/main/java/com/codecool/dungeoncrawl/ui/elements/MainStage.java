@@ -31,8 +31,8 @@ public class MainStage {
     public void setInventoryValueLabel(String text) {
         this.statusPane.setInventoryValueLabel(text);
     }
-    public void setXPValueLabel(String text) {
-        this.statusPane.setXPValueLabel(text);
+    public void setLevelValueLabel(String text) {
+        this.statusPane.setLevelValueLabel(text);
     }
     public void setAttackValueLabel(String text) {
         this.statusPane.setAttackValueLabel(text);
